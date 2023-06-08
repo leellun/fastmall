@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newland.mall.mapper.CouponUserMapper">
+    <resultMap id="BaseResultMap" type="com.newland.mall.entity.CouponUser">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="coupon_id" jdbcType="BIGINT" property="couponId"/>
+        <result column="status" jdbcType="SMALLINT" property="status"/>
+        <result column="used_time" jdbcType="TIMESTAMP" property="usedTime"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="order_id" jdbcType="BIGINT" property="orderId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="deleted" jdbcType="BIT" property="deleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , user_id, coupon_id, status, used_time, start_time, end_time, order_id, create_time,
+        update_time, deleted
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_coupon_user
+        where id = #{id,jdbcType=BIGINT} and deleted = 0
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from mall_coupon_user
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <update id="deleteLogicalByPrimaryKey">
+        update mall_coupon_user
+        set deleted = 1
+        where id = #{id}
+    </update>
+    <insert id="insert" parameterType="com.newland.mall.entity.CouponUser">
+        insert into mall_coupon_user (id, user_id, coupon_id,
+                                      status, used_time, start_time,
+                                      end_time, order_id, create_time,
+                                      update_time, deleted)
+        values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{couponId,jdbcType=INTEGER},
+                #{status,jdbcType=SMALLINT}, #{usedTime,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP},
+                #{endTime,jdbcType=TIMESTAMP}, #{orderId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP},
+                #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.newland.mall.entity.CouponUser">
+        insert into mall_coupon_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="couponId != null">
+                coupon_id,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="usedTime != null">
+                used_time,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="couponId != null">
+                #{couponId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="usedTime != null">
+                #{usedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.newland.mall.entity.CouponUser">
+        update mall_coupon_user
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="couponId != null">
+                coupon_id = #{couponId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="usedTime != null">
+                used_time = #{usedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orderId != null">
+                order_id = #{orderId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.newland.mall.entity.CouponUser">
+        update mall_coupon_user
+        set user_id     = #{userId,jdbcType=BIGINT},
+            coupon_id   = #{couponId,jdbcType=INTEGER},
+            status      = #{status,jdbcType=SMALLINT},
+            used_time   = #{usedTime,jdbcType=TIMESTAMP},
+            start_time  = #{startTime,jdbcType=TIMESTAMP},
+            end_time    = #{endTime,jdbcType=TIMESTAMP},
+            order_id    = #{orderId,jdbcType=BIGINT},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            deleted     = #{deleted,jdbcType=BIT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="listCouponUsers" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_coupon_user
+        <where>
+            deleted = 0
+            <if test="userId!=null">and user_id = #{userId}</if>
+            <if test="couponId!=null">and coupon_id = #{couponId}</if>
+            <if test="status!=null">and status = #{status}</if>
+        </where>
+    </select>
+    <select id="countByUserIdAndCouponId" resultType="java.lang.Long">
+        select count(0)
+        from mall_coupon_user
+        where user_id = #{userId}
+          and coupon_id = #{couponId}
+          and deleted = 0
+    </select>
+    <select id="countByCouponId" resultType="java.lang.Long">
+        select count(0)
+        from mall_coupon_user
+        where coupon_id = #{couponId}
+          and deleted = 0
+    </select>
+    <select id="listByOrderId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_coupon_user where order_id = #{orderId} and deleted = 0
+    </select>
+    <select id="listByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_coupon_user where user_id = #{userId} and deleted = 0
+    </select>
+</mapper>

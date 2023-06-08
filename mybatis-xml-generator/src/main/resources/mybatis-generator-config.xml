@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--mybatis的代码生成器相关配置-->
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!-- 引入配置文件 -->
+    <properties resource="application.properties"/>
+    <context id="sys" targetRuntime="MyBatis3" defaultModelType="flat">
+        <!--生成mapper.xml时覆盖原文件-->
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+        <plugin type="com.mybatis.generator.plugin.LogicDeletePlugin"></plugin>
+        <plugin type="com.mybatis.generator.core.ServiceAndControllerGeneratorPlugin">
+            <property name="targetProject" value="./src/main/java"/>
+            <property name="servicePackage" value="com.newland.mall.service"/>
+            <property name="serviceImplPackage" value="com.newland.mall.service.impl"/>
+            <property name="controllerPackage" value="com.newland.mall.controller"/>
+            <property name="superDaoInterface" value="com.newland.mybatis.mapper.BaseMapper"/>
+            <!--UserService,该值则为Service-->
+            <property name="serviceSuffix" value="Service"/>
+            <property name="author" value="leellun"/>
+            <property name="hasLombok" value="true"/>
+            <!--Service接口的父接口-->
+            <property name="superServiceInterface" value="com.newland.mybatis.service.IService"/>
+            <!--ServiceImpl的父类-->
+            <property name="superServiceImpl" value="com.newland.mybatis.service.impl.ServiceImpl"/>
+            <!--controller的父类接口-->
+            <!--            <property name="superController" value="com.newland.boot.commons.controller.GeneralCrudController"/>-->
+        </plugin>
+
+        <!-- 注释 -->
+        <commentGenerator>
+            <!-- 是否不生成注释 -->
+            <property name="suppressAllComments" value="true"/>
+            <!-- 不希望生成的注释中包含时间戳 -->
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+
+        <!-- jdbc连接 -->
+        <jdbcConnection driverClass="${spring.datasource.driver-class-name}"
+                        connectionURL="${spring.datasource.url}"
+                        userId="${spring.datasource.username}"
+                        password="${spring.datasource.password}">
+            <!-- 获取表注释 -->
+            <property name="useInformationSchema" value="true"/>
+            <!--高版本的 mysql-connector-java 需要设置 nullCatalogMeansCurrent=true 会影响useInformationSchema-->
+            <!--            <property name="nullCatalogMeansCurrent" value="true"/>-->
+        </jdbcConnection>
+
+        <!-- 类型转换 -->
+        <javaTypeResolver>
+            <!--是否使用bigDecimal，默认false。
+                false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer
+                true，把JDBC DECIMAL 和 NUMERIC 类型解析为java.math.BigDecimal-->
+            <property name="forceBigDecimals" value="true"/>
+            <!--默认false
+                false，将所有 JDBC 的时间类型解析为 java.util.Date
+                true，将 JDBC 的时间类型按如下规则解析
+                    DATE	                -> java.time.LocalDate
+                    TIME	                -> java.time.LocalTime
+                    TIMESTAMP               -> java.time.LocalDateTime
+                    TIME_WITH_TIMEZONE  	-> java.time.OffsetTime
+                    TIMESTAMP_WITH_TIMEZONE	-> java.time.OffsetDateTime
+                -->
+            <property name="useJSR310Types" value="true"/>
+        </javaTypeResolver>
+
+        <!-- 生成实体类地址 -->
+        <javaModelGenerator targetPackage="com.newland.mall.entity" targetProject="src/main/java">
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+
+        <sqlMapGenerator targetPackage="mapper/mall" targetProject="src/main/resources">
+        </sqlMapGenerator>
+
+        <javaClientGenerator targetPackage="com.newland.mall.mapper" targetProject="src/main/java"
+                             type="XMLMAPPER">
+        </javaClientGenerator>
+
+
+        <table schema="" tableName="mall_goods_attr" domainObjectName="GoodsAttr"
+               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false" selectByExampleQueryId="false"></table>
+        <table schema="" tableName="mall_goods_attr_value" domainObjectName="GoodsAttrValue"
+               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false" selectByExampleQueryId="false"></table>
+        <table schema="" tableName="mall_goods_category_attr_relation" domainObjectName="GoodsCategoryAttrRelation"
+               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false" selectByExampleQueryId="false"></table>
+
+        <table schema="" tableName="mall_goods_group" domainObjectName="GoodsGroup"
+               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false" selectByExampleQueryId="false"></table>
+        <table schema="" tableName="mall_goods_group_attr_relation" domainObjectName="GoodsGroupAttrRelation"
+               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false" selectByExampleQueryId="false"></table>
+        <table schema="" tableName="mall_goods_product_spec_relation" domainObjectName="GoodsProductSpecRelation"
+               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false" selectByExampleQueryId="false"></table>
+        <table schema="" tableName="mall_goods_spec" domainObjectName="GoodsSpec"
+               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false" selectByExampleQueryId="false"></table>
+        <table schema="" tableName="mall_goods_value" domainObjectName="GoodsValue"
+               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false" selectByExampleQueryId="false"></table>
+    </context>
+</generatorConfiguration>

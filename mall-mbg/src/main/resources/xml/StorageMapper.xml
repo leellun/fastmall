@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newland.mall.mapper.StorageMapper">
+    <resultMap id="BaseResultMap" type="com.newland.mall.entity.Storage">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="unique_key" jdbcType="VARCHAR" property="uniqueKey"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="size" jdbcType="INTEGER" property="size"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="deleted" jdbcType="BIT" property="deleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, unique_key, name, type, size, url, create_time, update_time, deleted
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_storage
+        where id = #{id,jdbcType=BIGINT} and deleted = 0
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from mall_storage
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <update id="deleteLogicalByPrimaryKey">
+        update mall_storage set deleted = 1 where id=#{id}
+    </update>
+    <insert id="insert" parameterType="com.newland.mall.entity.Storage">
+        insert into mall_storage (id, unique_key, name,
+        type, size, url, create_time,
+        update_time, deleted)
+        values (#{id,jdbcType=BIGINT}, #{uniqueKey,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+        #{type,jdbcType=VARCHAR}, #{size,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+        #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.newland.mall.entity.Storage">
+        insert into mall_storage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="uniqueKey != null">
+                unique_key,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="size != null">
+                size,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="key != null">
+                #{uniqueKey,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="size != null">
+                #{size,jdbcType=INTEGER},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.newland.mall.entity.Storage">
+        update mall_storage
+        <set>
+            <if test="key != null">
+                unique_key = #{uniqueKey,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="size != null">
+                size = #{size,jdbcType=INTEGER},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.newland.mall.entity.Storage">
+        update mall_storage
+        set unique_key = #{uniqueKey,jdbcType=VARCHAR},
+        name = #{name,jdbcType=VARCHAR},
+        type = #{type,jdbcType=VARCHAR},
+        size = #{size,jdbcType=INTEGER},
+        url = #{url,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        deleted = #{deleted,jdbcType=BIT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="getByKey" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_storage
+        where unique_key = #{key} and deleted = 0
+    </select>
+    <update id="deleteByKey">
+        update mall_storage set deleted=1 where unique_key=#{key}
+    </update>
+    <select id="listByKeyAndName" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_storage
+        <where>
+            deleted = 0
+            <if test="key!=null and key!=''">and unique_key=#{key}</if>
+            <if test="name!=null and name!=''">and name="%"#{name}"%"</if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newland.mall.mapper.NoticeAdminMapper">
+    <resultMap id="BaseResultMap" type="com.newland.mall.entity.NoticeAdmin">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="notice_id" jdbcType="BIGINT" property="noticeId"/>
+        <result column="notice_title" jdbcType="VARCHAR" property="noticeTitle"/>
+        <result column="admin_id" jdbcType="BIGINT" property="adminId"/>
+        <result column="read_time" jdbcType="TIMESTAMP" property="readTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="deleted" jdbcType="BIT" property="deleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, notice_id, notice_title, admin_id, read_time, create_time, update_time, deleted
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_notice_admin
+        where id = #{id,jdbcType=BIGINT} and deleted = 0
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from mall_notice_admin
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <update id="deleteLogicalByPrimaryKey">
+        update mall_notice_admin set deleted = 1 where id=#{id}
+    </update>
+    <insert id="insert" parameterType="com.newland.mall.entity.NoticeAdmin">
+        insert into mall_notice_admin (id, notice_id, notice_title,
+        admin_id, read_time, create_time,
+        update_time, deleted)
+        values (#{id,jdbcType=BIGINT}, #{noticeId,jdbcType=INTEGER}, #{noticeTitle,jdbcType=VARCHAR},
+        #{adminId,jdbcType=INTEGER}, #{readTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP},
+        #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.newland.mall.entity.NoticeAdmin">
+        insert into mall_notice_admin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="noticeId != null">
+                notice_id,
+            </if>
+            <if test="noticeTitle != null">
+                notice_title,
+            </if>
+            <if test="adminId != null">
+                admin_id,
+            </if>
+            <if test="readTime != null">
+                read_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="noticeId != null">
+                #{noticeId,jdbcType=INTEGER},
+            </if>
+            <if test="noticeTitle != null">
+                #{noticeTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="adminId != null">
+                #{adminId,jdbcType=INTEGER},
+            </if>
+            <if test="readTime != null">
+                #{readTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.newland.mall.entity.NoticeAdmin">
+        update mall_notice_admin
+        <set>
+            <if test="noticeId != null">
+                notice_id = #{noticeId,jdbcType=INTEGER},
+            </if>
+            <if test="noticeTitle != null">
+                notice_title = #{noticeTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="adminId != null">
+                admin_id = #{adminId,jdbcType=INTEGER},
+            </if>
+            <if test="readTime != null">
+                read_time = #{readTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.newland.mall.entity.NoticeAdmin">
+        update mall_notice_admin
+        set notice_id = #{noticeId,jdbcType=INTEGER},
+        notice_title = #{noticeTitle,jdbcType=VARCHAR},
+        admin_id = #{adminId,jdbcType=INTEGER},
+        read_time = #{readTime,jdbcType=TIMESTAMP},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        deleted = #{deleted,jdbcType=BIT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="listByNoticeId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_notice_admin where notice_id=#{noticeId} and deleted = 0
+    </select>
+    <select id="countReadByNoticeId" resultType="java.lang.Long">
+        select count(1) from mall_notice_admin where notice_id=#{noticeId} and read_time is not null and deleted = 0
+    </select>
+    <select id="countUnread" resultType="java.lang.Integer">
+        select count(1) from mall_notice_admin where admin_id=#{adminId} and read_time is null and deleted = 0
+    </select>
+    <update id="updateByNoticeId">
+        update mall_notice_admin
+        <set>
+            <if test="noticeId != null">
+                notice_id = #{noticeAdmin.noticeId,jdbcType=INTEGER},
+            </if>
+            <if test="noticeTitle != null">
+                notice_title = #{noticeAdmin.noticeTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="adminId != null">
+                admin_id = #{noticeAdmin.adminId,jdbcType=INTEGER},
+            </if>
+            <if test="readTime != null">
+                read_time = #{noticeAdmin.readTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{noticeAdmin.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{noticeAdmin.updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                deleted = #{noticeAdmin.deleted,jdbcType=BIT},
+            </if>
+        </set>
+        where notice_id=#{noticeId}
+    </update>
+    <update id="deletedByNoticeId">
+        update mall_notice_admin set deleted=1 where notice_id=#{noticeId}
+    </update>
+    <update id="deleteByNoticeIds">
+        update mall_notice_admin set deleted=1 where notice_id in
+        <foreach collection="noticeIds" item="noticeId" open="(" close=")" separator=",">#{noticeId}</foreach>
+    </update>
+    <select id="getByNoticeIdAndAdminId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_notice_admin
+        where notice_id = #{noticeId} and admin_id = #{adminId}
+    </select>
+    <update id="updateReadTimeByIds">
+        update mall_notice_admin set read_time=#{time},update_time=#{time}
+        where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </update>
+    <update id="batchDeleteByIds">
+        update mall_notice_admin set update_time=#{time} , deleted = 1
+        where admin_id=#{adminId} and id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </update>
+    <select id="listNotices" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_notice_admin
+        <where>
+            <if test="title!=null and title!=''">title like "%"#{title}"%"</if>
+            <choose>
+                <when test="type=='read'"> and read_time is not null</when>
+                <when test="type=='unread'"> and read_time is null</when>
+            </choose>
+            <if test="adminId!=null"> and admin_id = #{adminId}</if>
+        </where>
+    </select>
+</mapper>

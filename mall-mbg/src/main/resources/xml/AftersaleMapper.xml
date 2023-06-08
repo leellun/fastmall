@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newland.mall.mapper.AftersaleMapper">
+    <resultMap id="BaseResultMap" type="com.newland.mall.entity.Aftersale">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="aftersale_sn" jdbcType="VARCHAR" property="aftersaleSn"/>
+        <result column="order_id" jdbcType="BIGINT" property="orderId"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="type" jdbcType="SMALLINT" property="type"/>
+        <result column="reason" jdbcType="VARCHAR" property="reason"/>
+        <result column="amount" jdbcType="DECIMAL" property="amount"/>
+        <result column="pictures" jdbcType="VARCHAR" property="pictures"/>
+        <result column="comment" jdbcType="VARCHAR" property="comment"/>
+        <result column="status" jdbcType="SMALLINT" property="status"/>
+        <result column="handle_time" jdbcType="TIMESTAMP" property="handleTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="deleted" jdbcType="BIT" property="deleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, aftersale_sn, order_id, user_id, type, reason, amount, pictures, comment, status,
+        handle_time, create_time, update_time, deleted
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_aftersale
+        where id = #{id,jdbcType=BIGINT} and deleted = 0
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from mall_aftersale
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <update id="deleteLogicalByPrimaryKey">
+        update mall_aftersale set deleted = 1 where id=#{id}
+    </update>
+    <insert id="insert" parameterType="com.newland.mall.entity.Aftersale">
+        insert into mall_aftersale (id, aftersale_sn, order_id,
+        user_id, type, reason,
+        amount, pictures, comment,
+        status, handle_time, create_time,
+        update_time, deleted)
+        values (#{id,jdbcType=BIGINT}, #{aftersaleSn,jdbcType=VARCHAR}, #{orderId,jdbcType=BIGINT},
+        #{userId,jdbcType=BIGINT}, #{type,jdbcType=SMALLINT}, #{reason,jdbcType=VARCHAR},
+        #{amount,jdbcType=DECIMAL}, #{pictures,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR},
+        #{status,jdbcType=SMALLINT}, #{handleTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP},
+        #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.newland.mall.entity.Aftersale">
+        insert into mall_aftersale
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="aftersaleSn != null">
+                aftersale_sn,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="reason != null">
+                reason,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="pictures != null">
+                pictures,
+            </if>
+            <if test="comment != null">
+                comment,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="handleTime != null">
+                handle_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="aftersaleSn != null">
+                #{aftersaleSn,jdbcType=VARCHAR},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=SMALLINT},
+            </if>
+            <if test="reason != null">
+                #{reason,jdbcType=VARCHAR},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="pictures != null">
+                #{pictures,jdbcType=VARCHAR},
+            </if>
+            <if test="comment != null">
+                #{comment,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="handleTime != null">
+                #{handleTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.newland.mall.entity.Aftersale">
+        update mall_aftersale
+        <set>
+            <if test="aftersaleSn != null">
+                aftersale_sn = #{aftersaleSn,jdbcType=VARCHAR},
+            </if>
+            <if test="orderId != null">
+                order_id = #{orderId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=SMALLINT},
+            </if>
+            <if test="reason != null">
+                reason = #{reason,jdbcType=VARCHAR},
+            </if>
+            <if test="amount != null">
+                amount = #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="pictures != null">
+                pictures = #{pictures,jdbcType=VARCHAR},
+            </if>
+            <if test="comment != null">
+                comment = #{comment,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="handleTime != null">
+                handle_time = #{handleTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.newland.mall.entity.Aftersale">
+        update mall_aftersale
+        set aftersale_sn = #{aftersaleSn,jdbcType=VARCHAR},
+        order_id = #{orderId,jdbcType=BIGINT},
+        user_id = #{userId,jdbcType=BIGINT},
+        type = #{type,jdbcType=SMALLINT},
+        reason = #{reason,jdbcType=VARCHAR},
+        amount = #{amount,jdbcType=DECIMAL},
+        pictures = #{pictures,jdbcType=VARCHAR},
+        comment = #{comment,jdbcType=VARCHAR},
+        status = #{status,jdbcType=SMALLINT},
+        handle_time = #{handleTime,jdbcType=TIMESTAMP},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        deleted = #{deleted,jdbcType=BIT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="listAftersales" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_aftersale
+        <where>
+            deleted = 0
+            <if test="orderId!=null">and order_id =#{orderId}</if>
+            <if test="aftersaleSn!=null">and aftersale_sn like "%"#{aftersaleSn}"%"</if>
+            <if test="status!=null">and status =#{status}</if>
+        </where>
+    </select>
+    <select id="listAftersales_COUNT" resultType="java.lang.Long">
+        select
+        count(0)
+        from mall_aftersale
+        <where>
+            deleted = 0
+            <if test="orderId!=null">and order_id =#{orderId}</if>
+            <if test="aftersaleSn!=null">and aftersale_sn like "%"#{aftersaleSn}"%"</if>
+            <if test="status!=null">and status =#{status}</if>
+        </where>
+    </select>
+    <select id="listByUserIdAndStatus" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_aftersale where deleted = 0 and user_id={userId} and status =#{status}
+    </select>
+    <select id="getByOrderId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_aftersale where order_id =#{orderId} and deleted = 0
+    </select>
+    <update id="deleteByOrderId">
+        update mall_aftersale set deleted=1 where user_id={userId} and order_id =#{orderId}
+    </update>
+    <select id="aftersaleSn" resultType="java.lang.Long">
+        select count(0)
+        from mall_aftersale where aftersale_sn =#{aftersaleSn} and deleted = 0
+    </select>
+</mapper>

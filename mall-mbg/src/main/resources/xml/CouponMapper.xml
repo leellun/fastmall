@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newland.mall.mapper.CouponMapper">
+    <resultMap id="BaseResultMap" type="com.newland.mall.entity.Coupon">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="tag" jdbcType="VARCHAR" property="tag"/>
+        <result column="total" jdbcType="INTEGER" property="total"/>
+        <result column="discount" jdbcType="DECIMAL" property="discount"/>
+        <result column="min" jdbcType="DECIMAL" property="min"/>
+        <result column="limit_count" jdbcType="SMALLINT" property="limitCount"/>
+        <result column="type" jdbcType="SMALLINT" property="type"/>
+        <result column="status" jdbcType="SMALLINT" property="status"/>
+        <result column="goods_type" jdbcType="SMALLINT" property="goodsType"/>
+        <result column="goods_value" jdbcType="VARCHAR" property="goodsValue"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="time_type" jdbcType="SMALLINT" property="timeType"/>
+        <result column="days" jdbcType="SMALLINT" property="days"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="deleted" jdbcType="BIT" property="deleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name, description, tag, total, discount, min, limit_count, type, status, goods_type, goods_value,
+        code, time_type, days, start_time, end_time, create_time, update_time, deleted
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_coupon
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from mall_coupon
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <update id="deleteLogicalByPrimaryKey">
+        update mall_coupon
+        set deleted = 1
+        where id = #{id}
+    </update>
+    <insert id="insert" parameterType="com.newland.mall.entity.Coupon">
+        insert into mall_coupon (id, name, description,
+                                 tag, total, discount,
+                                 min, limit_count, type,
+                                 status, goods_type, goods_value,
+                                 code, time_type, days,
+                                 start_time, end_time, create_time,
+                                 update_time, deleted)
+        values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+                #{tag,jdbcType=VARCHAR}, #{total,jdbcType=INTEGER}, #{discount,jdbcType=DECIMAL},
+                #{min,jdbcType=DECIMAL}, #{limitCount,jdbcType=SMALLINT}, #{type,jdbcType=SMALLINT},
+                #{status,jdbcType=SMALLINT}, #{goodsType,jdbcType=SMALLINT}, #{goodsValue,jdbcType=VARCHAR},
+                #{code,jdbcType=VARCHAR}, #{timeType,jdbcType=SMALLINT}, #{days,jdbcType=SMALLINT},
+                #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP},
+                #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.newland.mall.entity.Coupon">
+        insert into mall_coupon
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="tag != null">
+                tag,
+            </if>
+            <if test="total != null">
+                total,
+            </if>
+            <if test="discount != null">
+                discount,
+            </if>
+            <if test="min != null">
+                min,
+            </if>
+            <if test="limitCount != null">
+                limit_count,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="goodsType != null">
+                goods_type,
+            </if>
+            <if test="goodsValue != null">
+                goods_value,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="timeType != null">
+                time_type,
+            </if>
+            <if test="days != null">
+                days,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="tag != null">
+                #{tag,jdbcType=VARCHAR},
+            </if>
+            <if test="total != null">
+                #{total,jdbcType=INTEGER},
+            </if>
+            <if test="discount != null">
+                #{discount,jdbcType=DECIMAL},
+            </if>
+            <if test="min != null">
+                #{min,jdbcType=DECIMAL},
+            </if>
+            <if test="limitCount != null">
+                #{limit_count,jdbcType=SMALLINT},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=SMALLINT},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="goodsType != null">
+                #{goodsType,jdbcType=SMALLINT},
+            </if>
+            <if test="goodsValue != null">
+                #{goodsValue,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="timeType != null">
+                #{timeType,jdbcType=SMALLINT},
+            </if>
+            <if test="days != null">
+                #{days,jdbcType=SMALLINT},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.newland.mall.entity.Coupon">
+        update mall_coupon
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="tag != null">
+                tag = #{tag,jdbcType=VARCHAR},
+            </if>
+            <if test="total != null">
+                total = #{total,jdbcType=INTEGER},
+            </if>
+            <if test="discount != null">
+                discount = #{discount,jdbcType=DECIMAL},
+            </if>
+            <if test="min != null">
+                min = #{min,jdbcType=DECIMAL},
+            </if>
+            <if test="limitCount != null">
+                limit_count = #{limitCount,jdbcType=SMALLINT},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=SMALLINT},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="goodsType != null">
+                goods_type = #{goodsType,jdbcType=SMALLINT},
+            </if>
+            <if test="goodsValue != null">
+                goods_value = #{goodsValue,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="timeType != null">
+                time_type = #{timeType,jdbcType=SMALLINT},
+            </if>
+            <if test="days != null">
+                days = #{days,jdbcType=SMALLINT},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.newland.mall.entity.Coupon">
+        update mall_coupon
+        set name        = #{name,jdbcType=VARCHAR},
+            description = #{description,jdbcType=VARCHAR},
+            tag         = #{tag,jdbcType=VARCHAR},
+            total       = #{total,jdbcType=INTEGER},
+            discount    = #{discount,jdbcType=DECIMAL},
+            min         = #{min,jdbcType=DECIMAL},
+            limit_count = #{limitCount,jdbcType=SMALLINT},
+            type        = #{type,jdbcType=SMALLINT},
+            status      = #{status,jdbcType=SMALLINT},
+            goods_type  = #{goodsType,jdbcType=SMALLINT},
+            goods_value = #{goodsValue,jdbcType=VARCHAR},
+            code        = #{code,jdbcType=VARCHAR},
+            time_type   = #{timeType,jdbcType=SMALLINT},
+            days        = #{days,jdbcType=SMALLINT},
+            start_time  = #{startTime,jdbcType=TIMESTAMP},
+            end_time    = #{endTime,jdbcType=TIMESTAMP},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            deleted     = #{deleted,jdbcType=BIT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="listCoupon" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_coupon
+        <where>
+            <if test="name!=null and name != ''">name like "%"#{name}"%"</if>
+            <if test="type!=null">and type=#{type}</if>
+            <if test="status!=null">and status=#{status}</if>
+        </where>
+    </select>
+    <select id="listByTypeAndStatus" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_coupon where type=#{type} and status=#{status}
+    </select>
+    <select id="countByCodeAndStatus" resultType="java.lang.Long">
+        select count(1)
+        from mall_coupon
+        where code = #{code}
+          and type = #{type}
+    </select>
+    <select id="getByCode" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_coupon
+        where code=#{code}
+    </select>
+    <select id="listAvailableCoupons" resultMap="BaseResultMap">
+        select t1.id, t1.name, t1.description, t1.tag,t1.days,t1.start_time, t1.end_time,t1.discount, t1.min
+        from mall_coupon t1  left join mall_coupon_user t2 on t1.id = t2.coupon_id and t2.user_id!=#{userId} and t2.deleted = 0
+        where t1.deleted = 0 and t2.id is null order by t1.create_time desc
+    </select>
+    <select id="listCoupons" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_coupon order by create_time desc
+    </select>
+</mapper>

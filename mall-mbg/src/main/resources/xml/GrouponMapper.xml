@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newland.mall.mapper.GrouponMapper">
+    <resultMap id="BaseResultMap" type="com.newland.mall.entity.Groupon">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="order_id" jdbcType="BIGINT" property="orderId"/>
+        <result column="groupon_id" jdbcType="BIGINT" property="grouponId"/>
+        <result column="rules_id" jdbcType="BIGINT" property="rulesId"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="share_url" jdbcType="VARCHAR" property="shareUrl"/>
+        <result column="creator_user_id" jdbcType="BIGINT" property="creatorUserId"/>
+        <result column="creator_user_time" jdbcType="TIMESTAMP" property="creatorUserTime"/>
+        <result column="status" jdbcType="SMALLINT" property="status"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="deleted" jdbcType="BIT" property="deleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, order_id, groupon_id, rules_id, user_id, share_url, creator_user_id, creator_user_time,
+        status, create_time, update_time, deleted
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_groupon
+        where id = #{id,jdbcType=BIGINT} and deleted = 0
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from mall_groupon
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <update id="deleteLogicalByPrimaryKey">
+        update mall_groupon set deleted = 1 where id=#{id}
+    </update>
+    <insert id="insert" parameterType="com.newland.mall.entity.Groupon">
+        insert into mall_groupon (id, order_id, groupon_id,
+        rules_id, user_id, share_url,
+        creator_user_id, creator_user_time, status,
+        create_time, update_time, deleted
+        )
+        values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{grouponId,jdbcType=INTEGER},
+        #{rulesId,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{shareUrl,jdbcType=VARCHAR},
+        #{creatorUserId,jdbcType=INTEGER}, #{creatorUserTime,jdbcType=TIMESTAMP}, #{status,jdbcType=SMALLINT},
+        #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.newland.mall.entity.Groupon">
+        insert into mall_groupon
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="grouponId != null">
+                groupon_id,
+            </if>
+            <if test="rulesId != null">
+                rules_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="shareUrl != null">
+                share_url,
+            </if>
+            <if test="creatorUserId != null">
+                creator_user_id,
+            </if>
+            <if test="creatorUserTime != null">
+                creator_user_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=BIGINT},
+            </if>
+            <if test="grouponId != null">
+                #{grouponId,jdbcType=INTEGER},
+            </if>
+            <if test="rulesId != null">
+                #{rulesId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="shareUrl != null">
+                #{shareUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="creatorUserId != null">
+                #{creatorUserId,jdbcType=INTEGER},
+            </if>
+            <if test="creatorUserTime != null">
+                #{creatorUserTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.newland.mall.entity.Groupon">
+        update mall_groupon
+        <set>
+            <if test="orderId != null">
+                order_id = #{orderId,jdbcType=BIGINT},
+            </if>
+            <if test="grouponId != null">
+                groupon_id = #{grouponId,jdbcType=INTEGER},
+            </if>
+            <if test="rulesId != null">
+                rules_id = #{rulesId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="shareUrl != null">
+                share_url = #{shareUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="creatorUserId != null">
+                creator_user_id = #{creatorUserId,jdbcType=INTEGER},
+            </if>
+            <if test="creatorUserTime != null">
+                creator_user_time = #{creatorUserTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.newland.mall.entity.Groupon">
+        update mall_groupon
+        set order_id = #{orderId,jdbcType=BIGINT},
+        groupon_id = #{grouponId,jdbcType=INTEGER},
+        rules_id = #{rulesId,jdbcType=INTEGER},
+        user_id = #{userId,jdbcType=BIGINT},
+        share_url = #{shareUrl,jdbcType=VARCHAR},
+        creator_user_id = #{creatorUserId,jdbcType=INTEGER},
+        creator_user_time = #{creatorUserTime,jdbcType=TIMESTAMP},
+        status = #{status,jdbcType=SMALLINT},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        deleted = #{deleted,jdbcType=BIT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="listSubGroupon" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_groupon
+        where groupon_id = #{grouponId} and status=#{status} and deleted = 0 order by create_time desc
+    </select>
+    <select id="countByGroupIdAndStatus" resultType="java.lang.Long">
+        select count(0) from mall_groupon
+        where deleted=0 and groupon_id = #{grouponId} and status=#{status}
+    </select>
+    <select id="countByUserIdAndGroupIdAndStatus" resultType="java.lang.Long">
+        select count(0) from mall_groupon
+        where deleted=0 and user_id = #{userId} and groupon_id = #{grouponId} and status=#{status}
+    </select>
+    <select id="listByRulesId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_groupon
+        where deleted = 0 and groupon_id = 0 and status != 0
+        <if test="rulesId!=null">and rules_id =#{rulesId}</if>
+    </select>
+    <select id="listRelated" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_groupon
+        where user_id = #{grouponId} and deleted = 0 and status=#{status} and
+        <choose>
+            <when test="showType==1">
+                groupon_id=0
+            </when>
+            <otherwise>
+                groupon_id!=0
+            </otherwise>
+        </choose>
+        order by create_time desc
+    </select>
+    <select id="getByOrderId"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_groupon
+        where deleted = 0 and order_id = #{orderId}
+    </select>
+    <select id="listJoinRecord"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_groupon
+        where deleted = 0 and groupon_id = #{grouponId} and status != 0
+    </select>
+</mapper>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newland.mall.mapper.KeywordMapper">
+    <resultMap id="BaseResultMap" type="com.newland.mall.entity.Keyword">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="keyword" jdbcType="VARCHAR" property="keyword"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="is_hot" jdbcType="BIT" property="isHot"/>
+        <result column="is_default" jdbcType="BIT" property="isDefault"/>
+        <result column="sort_order" jdbcType="INTEGER" property="sortOrder"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="deleted" jdbcType="BIT" property="deleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, keyword, url, is_hot, is_default, sort_order, create_time, update_time, deleted
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_keyword
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from mall_keyword
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <update id="deleteLogicalByPrimaryKey">
+        update mall_keyword set deleted = 1 where id=#{id}
+    </update>
+    <insert id="insert" parameterType="com.newland.mall.entity.Keyword">
+        insert into mall_keyword (id, keyword, url,
+        is_hot, is_default, sort_order,
+        create_time, update_time, deleted
+        )
+        values (#{id,jdbcType=BIGINT}, #{keyword,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+        #{isHot,jdbcType=BIT}, #{isDefault,jdbcType=BIT}, #{sortOrder,jdbcType=INTEGER},
+        #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.newland.mall.entity.Keyword">
+        insert into mall_keyword
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="keyword != null">
+                keyword,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="isHot != null">
+                is_hot,
+            </if>
+            <if test="isDefault != null">
+                is_default,
+            </if>
+            <if test="sortOrder != null">
+                sort_order,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="keyword != null">
+                #{keyword,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="isHot != null">
+                #{isHot,jdbcType=BIT},
+            </if>
+            <if test="isDefault != null">
+                #{isDefault,jdbcType=BIT},
+            </if>
+            <if test="sortOrder != null">
+                #{sortOrder,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.newland.mall.entity.Keyword">
+        update mall_keyword
+        <set>
+            <if test="keyword != null">
+                keyword = #{keyword,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="isHot != null">
+                is_hot = #{isHot,jdbcType=BIT},
+            </if>
+            <if test="isDefault != null">
+                is_default = #{isDefault,jdbcType=BIT},
+            </if>
+            <if test="sortOrder != null">
+                sort_order = #{sortOrder,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.newland.mall.entity.Keyword">
+        update mall_keyword
+        set keyword = #{keyword,jdbcType=VARCHAR},
+        url = #{url,jdbcType=VARCHAR},
+        is_hot = #{isHot,jdbcType=BIT},
+        is_default = #{isDefault,jdbcType=BIT},
+        sort_order = #{sortOrder,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        deleted = #{deleted,jdbcType=BIT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="listByKeywordAndUrl" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_keyword
+        <where>
+            <if test="keyword!=null and keyword!=''">keyword like "%"#{keyword}"%"</if>
+            <if test="url!=null and url!=''">url like "%"#{url}"%"</if>
+        </where>
+    </select>
+    <select id="getDefault" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_keyword deleted = 0 and is_default = 1 limit 1
+    </select>
+    <select id="listHots" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_keyword deleted = 0 and is_hot = 1
+    </select>
+</mapper>

@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newland.mall.mapper.OrderMapper">
+    <resultMap id="BaseResultMap" type="com.newland.mall.entity.Order">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="order_sn" jdbcType="VARCHAR" property="orderSn"/>
+        <result column="order_status" jdbcType="SMALLINT" property="orderStatus"/>
+        <result column="aftersale_status" jdbcType="SMALLINT" property="aftersaleStatus"/>
+        <result column="consignee" jdbcType="VARCHAR" property="consignee"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="message" jdbcType="VARCHAR" property="message"/>
+        <result column="goods_price" jdbcType="DECIMAL" property="goodsPrice"/>
+        <result column="freight_price" jdbcType="DECIMAL" property="freightPrice"/>
+        <result column="coupon_price" jdbcType="DECIMAL" property="couponPrice"/>
+        <result column="integral_price" jdbcType="DECIMAL" property="integralPrice"/>
+        <result column="groupon_price" jdbcType="DECIMAL" property="grouponPrice"/>
+        <result column="order_price" jdbcType="DECIMAL" property="orderPrice"/>
+        <result column="actual_price" jdbcType="DECIMAL" property="actualPrice"/>
+        <result column="pay_id" jdbcType="VARCHAR" property="payId"/>
+        <result column="pay_time" jdbcType="TIMESTAMP" property="payTime"/>
+        <result column="ship_sn" jdbcType="VARCHAR" property="shipSn"/>
+        <result column="ship_channel" jdbcType="VARCHAR" property="shipChannel"/>
+        <result column="ship_time" jdbcType="TIMESTAMP" property="shipTime"/>
+        <result column="refund_amount" jdbcType="DECIMAL" property="refundAmount"/>
+        <result column="refund_type" jdbcType="VARCHAR" property="refundType"/>
+        <result column="refund_content" jdbcType="VARCHAR" property="refundContent"/>
+        <result column="refund_time" jdbcType="TIMESTAMP" property="refundTime"/>
+        <result column="confirm_time" jdbcType="TIMESTAMP" property="confirmTime"/>
+        <result column="comments" jdbcType="SMALLINT" property="comments"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="deleted" jdbcType="BIT" property="deleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_id, order_sn, order_status, aftersale_status, consignee, mobile, address,
+        message, goods_price, freight_price, coupon_price, integral_price, groupon_price,
+        order_price, actual_price, pay_id, pay_time, ship_sn, ship_channel, ship_time, refund_amount,
+        refund_type, refund_content, refund_time, confirm_time, comments, end_time, create_time,
+        update_time, deleted
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_order
+        where id = #{id,jdbcType=BIGINT} and deleted = 0
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from mall_order
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <update id="deleteLogicalByPrimaryKey">
+        update mall_order set deleted = 1 where id=#{id}
+    </update>
+    <insert id="insert" parameterType="com.newland.mall.entity.Order">
+        insert into mall_order (id, user_id, order_sn,
+        order_status, aftersale_status, consignee,
+        mobile, address, message,
+        goods_price, freight_price, coupon_price,
+        integral_price, groupon_price, order_price,
+        actual_price, pay_id, pay_time,
+        ship_sn, ship_channel, ship_time,
+        refund_amount, refund_type, refund_content,
+        refund_time, confirm_time, comments,
+        end_time, create_time, update_time,
+        deleted)
+        values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{orderSn,jdbcType=VARCHAR},
+        #{orderStatus,jdbcType=SMALLINT}, #{aftersaleStatus,jdbcType=SMALLINT}, #{consignee,jdbcType=VARCHAR},
+        #{mobile,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR},
+        #{goodsPrice,jdbcType=DECIMAL}, #{freightPrice,jdbcType=DECIMAL}, #{couponPrice,jdbcType=DECIMAL},
+        #{integralPrice,jdbcType=DECIMAL}, #{grouponPrice,jdbcType=DECIMAL}, #{orderPrice,jdbcType=DECIMAL},
+        #{actualPrice,jdbcType=DECIMAL}, #{payId,jdbcType=VARCHAR}, #{payTime,jdbcType=TIMESTAMP},
+        #{shipSn,jdbcType=VARCHAR}, #{shipChannel,jdbcType=VARCHAR}, #{shipTime,jdbcType=TIMESTAMP},
+        #{refundAmount,jdbcType=DECIMAL}, #{refundType,jdbcType=VARCHAR}, #{refundContent,jdbcType=VARCHAR},
+        #{refundTime,jdbcType=TIMESTAMP}, #{confirmTime,jdbcType=TIMESTAMP}, #{comments,jdbcType=SMALLINT},
+        #{endTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+        #{deleted,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.newland.mall.entity.Order">
+        insert into mall_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="orderSn != null">
+                order_sn,
+            </if>
+            <if test="orderStatus != null">
+                order_status,
+            </if>
+            <if test="aftersaleStatus != null">
+                aftersale_status,
+            </if>
+            <if test="consignee != null">
+                consignee,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="message != null">
+                message,
+            </if>
+            <if test="goodsPrice != null">
+                goods_price,
+            </if>
+            <if test="freightPrice != null">
+                freight_price,
+            </if>
+            <if test="couponPrice != null">
+                coupon_price,
+            </if>
+            <if test="integralPrice != null">
+                integral_price,
+            </if>
+            <if test="grouponPrice != null">
+                groupon_price,
+            </if>
+            <if test="orderPrice != null">
+                order_price,
+            </if>
+            <if test="actualPrice != null">
+                actual_price,
+            </if>
+            <if test="payId != null">
+                pay_id,
+            </if>
+            <if test="payTime != null">
+                pay_time,
+            </if>
+            <if test="shipSn != null">
+                ship_sn,
+            </if>
+            <if test="shipChannel != null">
+                ship_channel,
+            </if>
+            <if test="shipTime != null">
+                ship_time,
+            </if>
+            <if test="refundAmount != null">
+                refund_amount,
+            </if>
+            <if test="refundType != null">
+                refund_type,
+            </if>
+            <if test="refundContent != null">
+                refund_content,
+            </if>
+            <if test="refundTime != null">
+                refund_time,
+            </if>
+            <if test="confirmTime != null">
+                confirm_time,
+            </if>
+            <if test="comments != null">
+                comments,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="orderSn != null">
+                #{orderSn,jdbcType=VARCHAR},
+            </if>
+            <if test="orderStatus != null">
+                #{orderStatus,jdbcType=SMALLINT},
+            </if>
+            <if test="aftersaleStatus != null">
+                #{aftersaleStatus,jdbcType=SMALLINT},
+            </if>
+            <if test="consignee != null">
+                #{consignee,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="message != null">
+                #{message,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsPrice != null">
+                #{goodsPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="freightPrice != null">
+                #{freightPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="couponPrice != null">
+                #{couponPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="integralPrice != null">
+                #{integralPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="grouponPrice != null">
+                #{grouponPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="orderPrice != null">
+                #{orderPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="actualPrice != null">
+                #{actualPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="payId != null">
+                #{payId,jdbcType=VARCHAR},
+            </if>
+            <if test="payTime != null">
+                #{payTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="shipSn != null">
+                #{shipSn,jdbcType=VARCHAR},
+            </if>
+            <if test="shipChannel != null">
+                #{shipChannel,jdbcType=VARCHAR},
+            </if>
+            <if test="shipTime != null">
+                #{shipTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="refundAmount != null">
+                #{refundAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="refundType != null">
+                #{refundType,jdbcType=VARCHAR},
+            </if>
+            <if test="refundContent != null">
+                #{refundContent,jdbcType=VARCHAR},
+            </if>
+            <if test="refundTime != null">
+                #{refundTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="confirmTime != null">
+                #{confirmTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="comments != null">
+                #{comments,jdbcType=SMALLINT},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.newland.mall.entity.Order">
+        update mall_order
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="orderSn != null">
+                order_sn = #{orderSn,jdbcType=VARCHAR},
+            </if>
+            <if test="orderStatus != null">
+                order_status = #{orderStatus,jdbcType=SMALLINT},
+            </if>
+            <if test="aftersaleStatus != null">
+                aftersale_status = #{aftersaleStatus,jdbcType=SMALLINT},
+            </if>
+            <if test="consignee != null">
+                consignee = #{consignee,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="message != null">
+                message = #{message,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsPrice != null">
+                goods_price = #{goodsPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="freightPrice != null">
+                freight_price = #{freightPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="couponPrice != null">
+                coupon_price = #{couponPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="integralPrice != null">
+                integral_price = #{integralPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="grouponPrice != null">
+                groupon_price = #{grouponPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="orderPrice != null">
+                order_price = #{orderPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="actualPrice != null">
+                actual_price = #{actualPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="payId != null">
+                pay_id = #{payId,jdbcType=VARCHAR},
+            </if>
+            <if test="payTime != null">
+                pay_time = #{payTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="shipSn != null">
+                ship_sn = #{shipSn,jdbcType=VARCHAR},
+            </if>
+            <if test="shipChannel != null">
+                ship_channel = #{shipChannel,jdbcType=VARCHAR},
+            </if>
+            <if test="shipTime != null">
+                ship_time = #{shipTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="refundAmount != null">
+                refund_amount = #{refundAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="refundType != null">
+                refund_type = #{refundType,jdbcType=VARCHAR},
+            </if>
+            <if test="refundContent != null">
+                refund_content = #{refundContent,jdbcType=VARCHAR},
+            </if>
+            <if test="refundTime != null">
+                refund_time = #{refundTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="confirmTime != null">
+                confirm_time = #{confirmTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="comments != null">
+                comments = #{comments,jdbcType=SMALLINT},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.newland.mall.entity.Order">
+        update mall_order
+        set user_id = #{userId,jdbcType=BIGINT},
+        order_sn = #{orderSn,jdbcType=VARCHAR},
+        order_status = #{orderStatus,jdbcType=SMALLINT},
+        aftersale_status = #{aftersaleStatus,jdbcType=SMALLINT},
+        consignee = #{consignee,jdbcType=VARCHAR},
+        mobile = #{mobile,jdbcType=VARCHAR},
+        address = #{address,jdbcType=VARCHAR},
+        message = #{message,jdbcType=VARCHAR},
+        goods_price = #{goodsPrice,jdbcType=DECIMAL},
+        freight_price = #{freightPrice,jdbcType=DECIMAL},
+        coupon_price = #{couponPrice,jdbcType=DECIMAL},
+        integral_price = #{integralPrice,jdbcType=DECIMAL},
+        groupon_price = #{grouponPrice,jdbcType=DECIMAL},
+        order_price = #{orderPrice,jdbcType=DECIMAL},
+        actual_price = #{actualPrice,jdbcType=DECIMAL},
+        pay_id = #{payId,jdbcType=VARCHAR},
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+        ship_sn = #{shipSn,jdbcType=VARCHAR},
+        ship_channel = #{shipChannel,jdbcType=VARCHAR},
+        ship_time = #{shipTime,jdbcType=TIMESTAMP},
+        refund_amount = #{refundAmount,jdbcType=DECIMAL},
+        refund_type = #{refundType,jdbcType=VARCHAR},
+        refund_content = #{refundContent,jdbcType=VARCHAR},
+        refund_time = #{refundTime,jdbcType=TIMESTAMP},
+        confirm_time = #{confirmTime,jdbcType=TIMESTAMP},
+        comments = #{comments,jdbcType=SMALLINT},
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        deleted = #{deleted,jdbcType=BIT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateWithOptimisticLocker">
+        update mall_order
+        <set>
+            <if test="order.id != null">
+                id = #{order.id,jdbcType=INTEGER},
+            </if>
+            <if test="order.userId != null">
+                user_id = #{order.userId,jdbcType=INTEGER},
+            </if>
+            <if test="order.orderSn != null">
+                order_sn = #{order.orderSn,jdbcType=VARCHAR},
+            </if>
+            <if test="order.orderStatus != null">
+                order_status = #{order.orderStatus,jdbcType=SMALLINT},
+            </if>
+            <if test="order.aftersaleStatus != null">
+                aftersale_status = #{order.aftersaleStatus,jdbcType=SMALLINT},
+            </if>
+            <if test="order.consignee != null">
+                consignee = #{order.consignee,jdbcType=VARCHAR},
+            </if>
+            <if test="order.mobile != null">
+                mobile = #{order.mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="order.address != null">
+                address = #{order.address,jdbcType=VARCHAR},
+            </if>
+            <if test="order.message != null">
+                message = #{order.message,jdbcType=VARCHAR},
+            </if>
+            <if test="order.goodsPrice != null">
+                goods_price = #{order.goodsPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="order.freightPrice != null">
+                freight_price = #{order.freightPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="order.couponPrice != null">
+                coupon_price = #{order.couponPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="order.integralPrice != null">
+                integral_price = #{order.integralPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="order.grouponPrice != null">
+                groupon_price = #{order.grouponPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="order.orderPrice != null">
+                order_price = #{order.orderPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="order.actualPrice != null">
+                actual_price = #{order.actualPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="order.payId != null">
+                pay_id = #{order.payId,jdbcType=VARCHAR},
+            </if>
+            <if test="order.payTime != null">
+                pay_time = #{order.payTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="order.shipSn != null">
+                ship_sn = #{order.shipSn,jdbcType=VARCHAR},
+            </if>
+            <if test="order.shipChannel != null">
+                ship_channel = #{order.shipChannel,jdbcType=VARCHAR},
+            </if>
+            <if test="order.shipTime != null">
+                ship_time = #{order.shipTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="order.refundAmount != null">
+                refund_amount = #{order.refundAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="order.refundType != null">
+                refund_type = #{order.refundType,jdbcType=VARCHAR},
+            </if>
+            <if test="order.refundContent != null">
+                refund_content = #{order.refundContent,jdbcType=VARCHAR},
+            </if>
+            <if test="order.refundTime != null">
+                refund_time = #{order.refundTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="order.confirmTime != null">
+                confirm_time = #{order.confirmTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="order.comments != null">
+                comments = #{order.comments,jdbcType=SMALLINT},
+            </if>
+            <if test="order.endTime != null">
+                end_time = #{order.endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="order.createTime != null">
+                create_time = #{order.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="order.updateTime != null">
+                update_time = #{order.updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="order.deleted != null">
+                deleted = #{order.deleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{order.id,jdbcType=INTEGER} and update_time = #{lastUpdateTime,jdbcType=INTEGER}
+    </update>
+    <select id="listOrders" resultType="com.newland.mall.model.vo.OrderVO">
+        select t1.id, t1.order_sn, t1.order_status, t1.actual_price, t1.freight_price, t1.create_time, t1.message,
+        t1.consignee, t1.address, t1.mobile, t1.pay_time, t1.order_price, t1.ship_channel, t1.ship_sn,
+        t2.id user_id, t2.nickname user_name, t2.avatar user_avatar, t1.integral_price,
+        t3.id ogid, t3.goods_id, t3.product_id, t3.goods_name, t3.pic_url goods_picture,
+        t3.specifications goods_specifications, t3.number goods_number, t3.price goods_price
+        from mall_order t1
+        left join mall_user t2 on t1.user_id = t2.id
+        left join mall_order_goods t3 on t1.id = t3.order_id
+        left join mall_goods t4 on t3.goods_id = t4.id
+        <where>
+            t1.deleted = 0
+            <if test="nickname!=null and nickname!=''">and t2.nickname like "%"#{nickname}"%"</if>
+            <if test="consignee!=null and consignee!=''">and t1.consignee like "%"#{consignee}"%"</if>
+            <if test="orderSn!=null and orderSn!=''">and t1.order_sn = #{orderSn}</if>
+            <if test="start!=null ">and t1.create_time >= #{start}</if>
+            <if test="start!=null ">and t1.create_time <![CDATA[<]]> #{start}</if>
+            <if test="orderStatusArray!=null and orderStatusArray.size()>0">
+                <foreach collection="orderStatusArray" open=" and (" separator=" or " close=")" item="status">
+                    t1.order_status=#{status}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="count" resultType="java.lang.Long">
+        select count(1) from mall_order where deleted = 0
+    </select>
+    <select id="listByUserIdAndStatus" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_order
+        where deleted=0 and user_id = #{userId}
+        <if test="orderStatus!=null and orderStatus.size()>0">
+            <foreach collection="orderStatus" open=" and (" separator=" or " close=")" item="status">
+                order_status=#{status}
+            </foreach>
+        </if>
+    </select>
+    <select id="getByUserIdAndOrderId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_order
+        where deleted = 0 and id = #{orderId} and user_id = #{userId}
+    </select>
+    <select id="countByOrdersn" resultType="java.lang.Long">
+        select count(0) from mall_order
+        where deleted = 0 and order_sn = #{orderSn}
+    </select>
+    <select id="getByOrdersn" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_order
+        where deleted = 0 and order_sn = #{orderSn}
+    </select>
+    <select id="listOrderInfo" resultMap="BaseResultMap">
+        select
+        order_status,comments
+        from mall_order
+        where deleted = 0 and user_id = #{userId}
+    </select>
+</mapper>

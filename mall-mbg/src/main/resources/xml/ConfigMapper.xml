@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newland.mall.mapper.ConfigMapper">
+  <resultMap id="BaseResultMap" type="com.newland.mall.entity.Config">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="key_name" jdbcType="VARCHAR" property="keyName" />
+    <result column="key_value" jdbcType="VARCHAR" property="keyValue" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="type" jdbcType="BIT" property="type" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, key_name, key_value, create_time, update_time,type, deleted
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mall_config
+    where id = #{id,jdbcType=BIGINT} and deleted = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from mall_config
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <update id="deleteLogicalByPrimaryKey">
+    update mall_config set deleted = 1 where id=#{id}
+  </update>
+  <insert id="insert" parameterType="com.newland.mall.entity.Config">
+    insert into mall_config (id, key_name, key_value, 
+      create_time, update_time, type,deleted
+      )
+    values (#{id,jdbcType=BIGINT}, #{keyName,jdbcType=VARCHAR}, #{keyValue,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},#{type}, #{deleted,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.newland.mall.entity.Config">
+    insert into mall_config
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="keyName != null">
+        key_name,
+      </if>
+      <if test="keyValue != null">
+        key_value,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="keyName != null">
+        #{keyName,jdbcType=VARCHAR},
+      </if>
+      <if test="keyValue != null">
+        #{keyValue,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        type = #{type},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.newland.mall.entity.Config">
+    update mall_config
+    <set>
+      <if test="keyName != null">
+        key_name = #{keyName,jdbcType=VARCHAR},
+      </if>
+      <if test="keyValue != null">
+        key_value = #{keyValue,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        type = #{type},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.newland.mall.entity.Config">
+    update mall_config
+    set key_name = #{keyName,jdbcType=VARCHAR},
+      key_value = #{keyValue,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      type = #{type},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getByKey" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mall_config
+    where key_name = #{key}
+  </select>
+  <select id="listByType" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mall_config
+    where type = #{type}
+  </select>
+  <select id="listAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mall_config
+  </select>
+</mapper>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newland.mall.mapper.CommentMapper">
+    <resultMap id="BaseResultMap" type="com.newland.mall.entity.Comment">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="value_id" jdbcType="BIGINT" property="valueId"/>
+        <result column="type" jdbcType="TINYINT" property="type"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="admin_content" jdbcType="VARCHAR" property="adminContent"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="has_picture" jdbcType="BIT" property="hasPicture"/>
+        <result column="pic_urls" jdbcType="VARCHAR" property="picUrls"/>
+        <result column="star" jdbcType="SMALLINT" property="star"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="deleted" jdbcType="BIT" property="deleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , value_id, type, content, admin_content, user_id, has_picture, pic_urls, star,
+    create_time, update_time, deleted
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_comment
+        where id = #{id,jdbcType=BIGINT} and deleted = 0
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from mall_comment
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <update id="deleteLogicalByPrimaryKey">
+        update mall_comment
+        set deleted = 1
+        where id = #{id}
+    </update>
+    <insert id="insert" parameterType="com.newland.mall.entity.Comment">
+        insert into mall_comment (id, value_id, type,
+                                  content, admin_content, user_id,
+                                  has_picture, pic_urls, star,
+                                  create_time, update_time, deleted)
+        values (#{id,jdbcType=BIGINT}, #{valueId,jdbcType=INTEGER}, #{type,jdbcType=TINYINT},
+                #{content,jdbcType=VARCHAR}, #{adminContent,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT},
+                #{hasPicture,jdbcType=BIT}, #{picUrls,jdbcType=VARCHAR}, #{star,jdbcType=SMALLINT},
+                #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.newland.mall.entity.Comment">
+        insert into mall_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="valueId != null">
+                value_id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="adminContent != null">
+                admin_content,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="hasPicture != null">
+                has_picture,
+            </if>
+            <if test="picUrls != null">
+                pic_urls,
+            </if>
+            <if test="star != null">
+                star,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="valueId != null">
+                #{valueId,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=TINYINT},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="adminContent != null">
+                #{adminContent,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="hasPicture != null">
+                #{hasPicture,jdbcType=BIT},
+            </if>
+            <if test="picUrls != null">
+                #{picUrls,jdbcType=VARCHAR},
+            </if>
+            <if test="star != null">
+                #{star,jdbcType=SMALLINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.newland.mall.entity.Comment">
+        update mall_comment
+        <set>
+            <if test="valueId != null">
+                value_id = #{valueId,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=TINYINT},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="adminContent != null">
+                admin_content = #{adminContent,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="hasPicture != null">
+                has_picture = #{hasPicture,jdbcType=BIT},
+            </if>
+            <if test="picUrls != null">
+                pic_urls = #{picUrls,jdbcType=VARCHAR},
+            </if>
+            <if test="star != null">
+                star = #{star,jdbcType=SMALLINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.newland.mall.entity.Comment">
+        update mall_comment
+        set value_id      = #{valueId,jdbcType=INTEGER},
+            type          = #{type,jdbcType=TINYINT},
+            content       = #{content,jdbcType=VARCHAR},
+            admin_content = #{adminContent,jdbcType=VARCHAR},
+            user_id       = #{userId,jdbcType=BIGINT},
+            has_picture   = #{hasPicture,jdbcType=BIT},
+            pic_urls      = #{picUrls,jdbcType=VARCHAR},
+            star          = #{star,jdbcType=SMALLINT},
+            create_time   = #{createTime,jdbcType=TIMESTAMP},
+            update_time   = #{updateTime,jdbcType=TIMESTAMP},
+            deleted       = #{deleted,jdbcType=BIT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="listByUserIdAndValueId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_comment
+        <where>
+            deleted = 0
+            <if test="userId!=null">and user_id = #{userId}</if>
+            <if test="valueId!=null">and value_id = #{valueId}</if>
+        </where>
+    </select>
+    <select id="countByValueId" resultType="java.lang.Long">
+        select count(0)
+        from mall_comment
+        where type = #{type}
+        and value_id = #{valueId} and deleted = 0
+        <if test="hasPicture!=null">and has_picture = #{hasPicture}</if>
+
+    </select>
+    <select id="listByTypeAndValueIdAndPicture" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_comment
+        where type = #{type} and deleted = 0
+        and value_id = #{valueId}
+        <if test="hasPicture!=null">and has_picture = #{hasPicture}</if>
+
+    </select>
+</mapper>

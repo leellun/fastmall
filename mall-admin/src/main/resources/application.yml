@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: mall-admin
+  profiles:
+    active: db,core,dev
+  web:
+    resources:
+      add-mappings: false
+  mvc:
+    throw-exception-if-no-handler-found: true
+
+newland:
+  security:
+    permit-items:
+      - url: /admin/auth/*
+      - url: /doc.html
+      - url: /swagger-ui/**
+      - url: /v3/api-docs/**
+      - url: /favicon.ico
+      - url: /webjars/**
+      - url: /wx/**
