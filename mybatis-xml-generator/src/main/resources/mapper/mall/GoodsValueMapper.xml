@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newland.mall.mapper.GoodsValueMapper">
+  <resultMap id="BaseResultMap" type="com.newland.mall.entity.GoodsValue">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="goods_attr_id" jdbcType="BIGINT" property="goodsAttrId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="attribute_sort" jdbcType="INTEGER" property="attributeSort" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="BIT" property="deleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, goods_attr_id, name, value, attribute_sort, create_time, update_time, deleted
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mall_goods_value
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from mall_goods_value
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.newland.mall.entity.GoodsValue">
+    insert into mall_goods_value (id, goods_attr_id, name, 
+      value, attribute_sort, create_time, 
+      update_time, deleted)
+    values (#{id,jdbcType=BIGINT}, #{goodsAttrId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
+      #{value,jdbcType=VARCHAR}, #{attributeSort,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.newland.mall.entity.GoodsValue">
+    insert into mall_goods_value
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsAttrId != null">
+        goods_attr_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="value != null">
+        value,
+      </if>
+      <if test="attributeSort != null">
+        attribute_sort,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="goodsAttrId != null">
+        #{goodsAttrId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeSort != null">
+        #{attributeSort,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.newland.mall.entity.GoodsValue">
+    update mall_goods_value
+    <set>
+      <if test="goodsAttrId != null">
+        goods_attr_id = #{goodsAttrId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeSort != null">
+        attribute_sort = #{attributeSort,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.newland.mall.entity.GoodsValue">
+    update mall_goods_value
+    set goods_attr_id = #{goodsAttrId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      value = #{value,jdbcType=VARCHAR},
+      attribute_sort = #{attributeSort,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteLogicalByPrimaryKey" parameterType="java.lang.Long">
+    update mall_goods_value
+    set deleted = 1 where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

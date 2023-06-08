@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newland.mall.mapper.GoodsAttrMapper">
+  <resultMap id="BaseResultMap" type="com.newland.mall.entity.GoodsAttr">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="select_type" jdbcType="INTEGER" property="selectType" />
+    <result column="input_type" jdbcType="INTEGER" property="inputType" />
+    <result column="input_list" jdbcType="VARCHAR" property="inputList" />
+    <result column="attr_sort" jdbcType="INTEGER" property="attrSort" />
+    <result column="filter_type" jdbcType="INTEGER" property="filterType" />
+    <result column="search_type" jdbcType="INTEGER" property="searchType" />
+    <result column="related_status" jdbcType="INTEGER" property="relatedStatus" />
+    <result column="hand_add_status" jdbcType="INTEGER" property="handAddStatus" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="has_pic" jdbcType="BIT" property="hasPic" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="BIT" property="deleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, select_type, input_type, input_list, attr_sort, filter_type, search_type, 
+    related_status, hand_add_status, type, has_pic, create_time, update_time, deleted
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mall_goods_attr
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from mall_goods_attr
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.newland.mall.entity.GoodsAttr">
+    insert into mall_goods_attr (id, name, select_type, 
+      input_type, input_list, attr_sort, 
+      filter_type, search_type, related_status, 
+      hand_add_status, type, has_pic, 
+      create_time, update_time, deleted
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{selectType,jdbcType=INTEGER}, 
+      #{inputType,jdbcType=INTEGER}, #{inputList,jdbcType=VARCHAR}, #{attrSort,jdbcType=INTEGER}, 
+      #{filterType,jdbcType=INTEGER}, #{searchType,jdbcType=INTEGER}, #{relatedStatus,jdbcType=INTEGER}, 
+      #{handAddStatus,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{hasPic,jdbcType=BIT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.newland.mall.entity.GoodsAttr">
+    insert into mall_goods_attr
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="selectType != null">
+        select_type,
+      </if>
+      <if test="inputType != null">
+        input_type,
+      </if>
+      <if test="inputList != null">
+        input_list,
+      </if>
+      <if test="attrSort != null">
+        attr_sort,
+      </if>
+      <if test="filterType != null">
+        filter_type,
+      </if>
+      <if test="searchType != null">
+        search_type,
+      </if>
+      <if test="relatedStatus != null">
+        related_status,
+      </if>
+      <if test="handAddStatus != null">
+        hand_add_status,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="hasPic != null">
+        has_pic,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="selectType != null">
+        #{selectType,jdbcType=INTEGER},
+      </if>
+      <if test="inputType != null">
+        #{inputType,jdbcType=INTEGER},
+      </if>
+      <if test="inputList != null">
+        #{inputList,jdbcType=VARCHAR},
+      </if>
+      <if test="attrSort != null">
+        #{attrSort,jdbcType=INTEGER},
+      </if>
+      <if test="filterType != null">
+        #{filterType,jdbcType=INTEGER},
+      </if>
+      <if test="searchType != null">
+        #{searchType,jdbcType=INTEGER},
+      </if>
+      <if test="relatedStatus != null">
+        #{relatedStatus,jdbcType=INTEGER},
+      </if>
+      <if test="handAddStatus != null">
+        #{handAddStatus,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="hasPic != null">
+        #{hasPic,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.newland.mall.entity.GoodsAttr">
+    update mall_goods_attr
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="selectType != null">
+        select_type = #{selectType,jdbcType=INTEGER},
+      </if>
+      <if test="inputType != null">
+        input_type = #{inputType,jdbcType=INTEGER},
+      </if>
+      <if test="inputList != null">
+        input_list = #{inputList,jdbcType=VARCHAR},
+      </if>
+      <if test="attrSort != null">
+        attr_sort = #{attrSort,jdbcType=INTEGER},
+      </if>
+      <if test="filterType != null">
+        filter_type = #{filterType,jdbcType=INTEGER},
+      </if>
+      <if test="searchType != null">
+        search_type = #{searchType,jdbcType=INTEGER},
+      </if>
+      <if test="relatedStatus != null">
+        related_status = #{relatedStatus,jdbcType=INTEGER},
+      </if>
+      <if test="handAddStatus != null">
+        hand_add_status = #{handAddStatus,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="hasPic != null">
+        has_pic = #{hasPic,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.newland.mall.entity.GoodsAttr">
+    update mall_goods_attr
+    set name = #{name,jdbcType=VARCHAR},
+      select_type = #{selectType,jdbcType=INTEGER},
+      input_type = #{inputType,jdbcType=INTEGER},
+      input_list = #{inputList,jdbcType=VARCHAR},
+      attr_sort = #{attrSort,jdbcType=INTEGER},
+      filter_type = #{filterType,jdbcType=INTEGER},
+      search_type = #{searchType,jdbcType=INTEGER},
+      related_status = #{relatedStatus,jdbcType=INTEGER},
+      hand_add_status = #{handAddStatus,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      has_pic = #{hasPic,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteLogicalByPrimaryKey" parameterType="java.lang.Long">
+    update mall_goods_attr
+    set deleted = 1 where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
