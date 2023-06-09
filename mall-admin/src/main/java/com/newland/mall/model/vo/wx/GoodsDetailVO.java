@@ -7,13 +7,13 @@ import java.util.List;
 
 /**
  * 商品详情
- * Author: leell
  * Date: 2023/4/4 20:09:52
+ * @author admin
  */
 @Data
 public class GoodsDetailVO {
     private Goods info ;
-    private  List<GoodsAttributeValue> attribute;
+    private  List<GoodsAttrValue> attribute;
     private List<GoodsSpecificationVO> specificationList;
     private List<GoodsProduct> productList;
     private  List<Issue> issue;

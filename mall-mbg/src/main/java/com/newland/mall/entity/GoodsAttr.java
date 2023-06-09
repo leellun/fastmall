@@ -1,28 +1,21 @@
 package com.newland.mall.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.newland.mall.model.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * 商品属性参数表
  * mall_goods_attr
  * @author leell
- * @date 2023-06-08 12:54:03
+ * @date 2023-06-08 13:44:15
  */
 @Data
 @Schema(name ="商品属性参数表")
 public class GoodsAttr extends BaseEntity implements Serializable {
-    /**
-     * 商品属性参数id
-     */
-    @Schema(name ="商品属性参数id")
-    @JsonSerialize(using= ToStringSerializer.class)
-    private Long id;
 
     /**
      * 属性名
@@ -39,7 +32,7 @@ public class GoodsAttr extends BaseEntity implements Serializable {
     /**
      * 属性录入方式：0->手工录入；1->从列表中选取
      */
-    @Schema(name ="属性录入方式：0->手工录入；1->从列表中选取")
+    @Schema(name ="属性录入方式：0->手工录入；1->列表选取")
     private Integer inputType;
 
     /**
@@ -89,6 +82,7 @@ public class GoodsAttr extends BaseEntity implements Serializable {
      */
     @Schema(name ="是否有图片")
     private Integer hasPic;
+
 
     private static final long serialVersionUID = 1L;
 }

@@ -8,8 +8,8 @@ import java.util.List;
 
 @Data
 public class CateVO {
-    @JsonSerialize(using= ToStringSerializer.class)
-    private Long value = null;
-    private String label = null;
-    private List<CateVO> children = null;
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long value;
+    private String label;
+    private List<CateVO> children;
 }

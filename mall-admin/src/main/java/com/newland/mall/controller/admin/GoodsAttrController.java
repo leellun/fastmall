@@ -5,7 +5,7 @@ import com.newland.mall.entity.GoodsAttr;
 import com.newland.mall.model.RestResponse;
 import com.newland.mall.model.dto.GoodsAttributeDto;
 import com.newland.mall.model.vo.GoodsAttrInfoVo;
-import com.newland.mall.service.GoodsAttributeService;
+import com.newland.mall.service.GoodsAttrService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,6 +16,7 @@ import java.util.List;
 
 /**
  * 商品属性参数表 控制器
+ *
  * @author leellun
  * @since 2023-06-04 21:50:54
  */
@@ -24,26 +25,26 @@ import java.util.List;
 @Tag(name = "商品属性参数表", description = "商品属性参数表")
 public class GoodsAttrController {
     @Autowired
-    private GoodsAttributeService goodsAttributeService;
+    private GoodsAttrService goodsAttrService;
 
 
     @Operation(description = "根据分类查询属性列表或参数列表")
-    @GetMapping(value = "/list/{cid}")
+    @GetMapping(value = "/list")
     @ResponseBody
-    public RestResponse<PageInfo<GoodsAttr>> getList(@PathVariable Long cid,
-                                                     @Parameter(description = "0表示属性，1表示参数") @RequestParam(value = "type") Integer type,
+    public RestResponse<PageInfo<GoodsAttr>> getList(@Parameter(description = "0表示属性，1表示参数") @RequestParam(value = "type", required = false) Integer type,
                                                      @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
                                                      @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo) {
 
-        PageInfo<GoodsAttr> productAttributeList = goodsAttributeService.getList(cid, type, pageSize, pageNo);
+        PageInfo<GoodsAttr> productAttributeList = goodsAttrService.getList(type, pageSize, pageNo);
         return RestResponse.ok(productAttributeList);
     }
+
     @Operation(description = "根据分类获取所有规格属性和销售属性")
     @GetMapping(value = "/all/{cid}")
     @ResponseBody
     public RestResponse<List<GoodsAttr>> getAllList(@PathVariable Long cid, @Parameter(description = "0表示属性，1表示参数") @RequestParam(value = "type") Integer type) {
 
-        List<GoodsAttr> productAttributeList = goodsAttributeService.getList(cid,type);
+        List<GoodsAttr> productAttributeList = goodsAttrService.getList(cid, type);
         return RestResponse.ok(productAttributeList);
     }
 
@@ -51,7 +52,7 @@ public class GoodsAttrController {
     @PostMapping(value = "/create")
     @ResponseBody
     public RestResponse create(@RequestBody GoodsAttributeDto productAttributeParam) {
-        goodsAttributeService.create(productAttributeParam);
+        goodsAttrService.create(productAttributeParam);
         return RestResponse.success("添加成功");
     }
 
@@ -59,7 +60,7 @@ public class GoodsAttrController {
     @PutMapping(value = "/update/{id}")
     @ResponseBody
     public RestResponse update(@PathVariable Long id, @RequestBody GoodsAttributeDto productAttributeParam) {
-        goodsAttributeService.update(id, productAttributeParam);
+        goodsAttrService.update(id, productAttributeParam);
         return RestResponse.success("更新成功");
     }
 
@@ -67,7 +68,7 @@ public class GoodsAttrController {
     @GetMapping(value = "/{id}")
     @ResponseBody
     public RestResponse<GoodsAttr> getItem(@PathVariable Long id) {
-        GoodsAttr productAttribute = goodsAttributeService.getItem(id);
+        GoodsAttr productAttribute = goodsAttrService.getItem(id);
         return RestResponse.ok(productAttribute);
     }
 
@@ -75,7 +76,7 @@ public class GoodsAttrController {
     @DeleteMapping(value = "/delete")
     @ResponseBody
     public RestResponse delete(@RequestBody List<Long> ids) {
-        goodsAttributeService.delete(ids);
+        goodsAttrService.delete(ids);
         return RestResponse.success("删除成功");
     }
 
@@ -83,7 +84,7 @@ public class GoodsAttrController {
     @GetMapping(value = "/attrInfo/{goodsCategoryId}")
     @ResponseBody
     public RestResponse<List<GoodsAttrInfoVo>> getAttrInfo(@PathVariable Long goodsCategoryId) {
-        List<GoodsAttrInfoVo> productAttrInfoList = goodsAttributeService.getGoodsAttrInfo(goodsCategoryId);
+        List<GoodsAttrInfoVo> productAttrInfoList = goodsAttrService.getGoodsAttrInfo(goodsCategoryId);
         return RestResponse.ok(productAttrInfoList);
     }
 }

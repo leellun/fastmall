@@ -1,6 +1,6 @@
 package com.newland.mall.model.vo.wx;
 
-import com.newland.mall.entity.GoodsSpecification;
+import com.newland.mall.entity.GoodsSpec;
 import lombok.Data;
 
 import java.util.List;
@@ -13,5 +13,5 @@ import java.util.List;
 @Data
 public class GoodsSpecificationVO {
     private String name;
-    private List<GoodsSpecification> valueList;
+    private List<GoodsSpec> valueList;
 }

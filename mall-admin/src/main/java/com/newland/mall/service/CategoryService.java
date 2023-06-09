@@ -1,6 +1,7 @@
 package com.newland.mall.service;
 
 import com.newland.mall.entity.Category;
+import com.newland.mall.model.vo.CateVO;
 import com.newland.mall.model.vo.CategoryVO;
 import com.newland.mall.model.vo.wx.CategoryAllVO;
 import com.newland.mall.model.vo.wx.CategoryDetailVO;
@@ -83,4 +84,10 @@ public interface CategoryService extends IService<Category> {
      * @return
      */
     List<Category> listL1WithoutRecommend(Integer catlogListLimit);
+
+    /**
+     * 分类选择
+     * @return
+     */
+    List<CateVO> listCats();
 }

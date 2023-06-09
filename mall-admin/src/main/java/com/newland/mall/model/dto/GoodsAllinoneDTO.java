@@ -1,9 +1,9 @@
 package com.newland.mall.model.dto;
 
 import com.newland.mall.entity.Goods;
-import com.newland.mall.entity.GoodsAttributeValue;
+import com.newland.mall.entity.GoodsAttrValue;
 import com.newland.mall.entity.GoodsProduct;
-import com.newland.mall.entity.GoodsSpecification;
+import com.newland.mall.entity.GoodsSpec;
 import lombok.Data;
 
 /**
@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 public class GoodsAllinoneDTO {
     Goods goods;
-    GoodsSpecification[] specifications;
-    GoodsAttributeValue[] attributes;
+    GoodsSpec[] specifications;
+    GoodsAttrValue[] attributes;
     GoodsProduct[] products;
 }

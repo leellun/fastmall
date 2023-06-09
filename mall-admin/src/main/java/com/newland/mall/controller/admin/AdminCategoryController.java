@@ -2,6 +2,8 @@ package com.newland.mall.controller.admin;
 
 import com.newland.mall.entity.Category;
 import com.newland.mall.model.RestResponse;
+import com.newland.mall.model.vo.BrandAndCategoryVO;
+import com.newland.mall.model.vo.CateVO;
 import com.newland.mall.model.vo.CategoryVO;
 import com.newland.mall.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,7 +35,11 @@ public class AdminCategoryController {
     public RestResponse<List<CategoryVO>> list() {
         return RestResponse.ok(categoryService.list());
     }
-
+    @GetMapping("/cat")
+    @Operation(summary = "分类选择")
+    public RestResponse<List<CateVO>> cats() {
+        return RestResponse.ok(categoryService.listCats());
+    }
     @Operation(summary = "添加")
     @PostMapping
     public RestResponse create(@RequestBody Category category) {

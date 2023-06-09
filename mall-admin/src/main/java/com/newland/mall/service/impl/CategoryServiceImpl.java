@@ -2,6 +2,7 @@ package com.newland.mall.service.impl;
 
 import com.newland.mall.entity.Category;
 import com.newland.mall.mapper.CategoryMapper;
+import com.newland.mall.model.vo.CateVO;
 import com.newland.mall.model.vo.CategoryVO;
 import com.newland.mall.model.vo.wx.CategoryAllVO;
 import com.newland.mall.model.vo.wx.CategoryDetailVO;
@@ -160,6 +161,31 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     @Override
     public List<Category> listL1WithoutRecommend(Integer catlogListLimit) {
         return PageWrapper.list(1, catlogListLimit, () -> baseMapper.listL1WithoutRecommend());
+    }
+
+    @Override
+    public List<CateVO> listCats() {
+        List<Category> l1CatList = this.listL1();
+        // 管理员设置“所属分类”
+        List<CateVO> categoryList = new ArrayList<>(l1CatList.size());
+
+        for (Category l1 : l1CatList) {
+            CateVO l1CatVo = new CateVO();
+            l1CatVo.setValue(l1.getId());
+            l1CatVo.setLabel(l1.getName());
+
+            List<Category> l2CatList = this.listByPid(l1.getId());
+            List<CateVO> children = new ArrayList<>(l2CatList.size());
+            for (Category l2 : l2CatList) {
+                CateVO l2CatVo = new CateVO();
+                l2CatVo.setValue(l2.getId());
+                l2CatVo.setLabel(l2.getName());
+                children.add(l2CatVo);
+            }
+            l1CatVo.setChildren(children);
+            categoryList.add(l1CatVo);
+        }
+        return categoryList;
     }
 
     /**

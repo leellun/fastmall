@@ -40,9 +40,9 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     @Autowired
     private GoodsProductService goodsProductService;
     @Autowired
-    private GoodsSpecificationService goodsSpecificationService;
+    private GoodsSpecService goodsSpecService;
     @Autowired
-    private GoodsAttributeValueService goodsAttributeService;
+    private GoodsAttrValueService goodsAttrValueService;
     @Autowired
     private CategoryService categoryService;
     @Autowired
@@ -70,8 +70,8 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         Goods goods = baseMapper.selectByPrimaryKey(id);
         AssertUtil.notNull(goods, "商品不存在");
         List<GoodsProduct> products = goodsProductService.listGoodsProducts(id);
-        List<GoodsSpecification> specifications = goodsSpecificationService.listGoodsSpecifications(id);
-        List<GoodsAttributeValue> attributes = goodsAttributeService.listGoodsAttributes(id);
+        List<GoodsSpec> specifications = goodsSpecService.listGoodsSpecifications(id);
+        List<GoodsAttrValue> attributes = goodsAttrValueService.listGoodsAttributes(id);
 
         Long categoryId = goods.getCategoryId();
         Category category = categoryService.getById(categoryId);
@@ -134,8 +134,8 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         validate(goodsAllinone);
 
         Goods goods = goodsAllinone.getGoods();
-        GoodsAttributeValue[] attributes = goodsAllinone.getAttributes();
-        GoodsSpecification[] specifications = goodsAllinone.getSpecifications();
+        GoodsAttrValue[] attributes = goodsAllinone.getAttributes();
+        GoodsSpec[] specifications = goodsAllinone.getSpecifications();
         GoodsProduct[] products = goodsAllinone.getProducts();
 
         String name = goods.getName();
@@ -155,15 +155,15 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         baseMapper.insert(goods);
 
         // 商品规格表_goods_specification
-        for (GoodsSpecification specification : specifications) {
+        for (GoodsSpec specification : specifications) {
             specification.setGoodsId(goods.getId());
-            goodsSpecificationService.add(specification);
+            goodsSpecService.add(specification);
         }
 
         // 商品参数表_goods_attribute
-        for (GoodsAttributeValue attribute : attributes) {
+        for (GoodsAttrValue attribute : attributes) {
             attribute.setGoodsId(goods.getId());
-            goodsAttributeService.add(attribute);
+            goodsAttrValueService.add(attribute);
         }
 
         // 商品货品表_product
@@ -177,8 +177,8 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     public void update(Long id, GoodsAllinoneDTO goodsAllinone) {
         validate(goodsAllinone);
         Goods goods = goodsAllinone.getGoods();
-        GoodsAttributeValue[] attributes = goodsAllinone.getAttributes();
-        GoodsSpecification[] specifications = goodsAllinone.getSpecifications();
+        GoodsAttrValue[] attributes = goodsAllinone.getAttributes();
+        GoodsSpec[] specifications = goodsAllinone.getSpecifications();
         GoodsProduct[] products = goodsAllinone.getProducts();
 
         // 商品表里面有一个字段retailPrice记录当前商品的最低价
@@ -197,12 +197,12 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         }
 
         // 商品规格表_goods_specification
-        for (GoodsSpecification specification : specifications) {
+        for (GoodsSpec specification : specifications) {
             // 目前只支持更新规格表的图片字段
             if (specification.getUpdateTime() == null) {
-                specification.setSpecification(null);
+//                specification.setSpecification(null);
                 specification.setValue(null);
-                goodsSpecificationService.updateById(specification);
+                goodsSpecService.updateById(specification);
             }
         }
 
@@ -214,14 +214,14 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         }
 
         // 商品参数表_goods_attribute
-        for (GoodsAttributeValue attribute : attributes) {
+        for (GoodsAttrValue attribute : attributes) {
             if (attribute.getId() == null || attribute.getId().equals(0L)) {
                 attribute.setGoodsId(goods.getId());
-                goodsAttributeService.add(attribute);
+                goodsAttrValueService.add(attribute);
             } else if (attribute.getDeleted().equals(BasicEnum.YES.getKey())) {
-                goodsAttributeService.delete(attribute.getId());
+                goodsAttrValueService.delete(attribute.getId());
             } else if (attribute.getUpdateTime() == null) {
-                goodsAttributeService.updateById(attribute);
+                goodsAttrValueService.updateById(attribute);
             }
         }
 
@@ -256,9 +256,9 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         Goods info = baseMapper.selectByPrimaryKey(id);
         AssertUtil.notNull(info, "商品不存在");
         // 商品属性
-        List<GoodsAttributeValue> goodsAttributes = goodsAttributeService.listGoodsAttributes(id);
-        // 商品规格 返回的是定制的GoodsSpecificationVo
-        List<GoodsSpecificationVO> goodsSpecifications = goodsSpecificationService.getSpecificationVoList(id);
+        List<GoodsAttrValue> goodsAttributes = goodsAttrValueService.listGoodsAttributes(id);
+        // 商品规格 返回的是定制的GoodsSpeVo
+        List<GoodsSpecificationVO> GoodsSpes = goodsSpecService.getSpecificationVoList(id);
         // 商品规格对应的数量和价格
         List<GoodsProduct> goodsProducts = goodsProductService.listGoodsProducts(id);
         // 商品问题，这里是一些通用问题
@@ -278,7 +278,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         GoodsDetailVO vo = new GoodsDetailVO();
         vo.setInfo(info);
         vo.setAttribute(goodsAttributes);
-        vo.setSpecificationList(goodsSpecifications);
+        vo.setSpecificationList(GoodsSpes);
         vo.setProductList(goodsProducts);
         vo.setIssue(issues);
         vo.setBrand(brand);
@@ -358,20 +358,20 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
             AssertUtil.notNull(categoryService.getById(categoryId), "分类不存在");
         }
 
-        GoodsAttributeValue[] attributes = goodsAllinone.getAttributes();
-        for (GoodsAttributeValue attribute : attributes) {
+        GoodsAttrValue[] attributes = goodsAllinone.getAttributes();
+        for (GoodsAttrValue attribute : attributes) {
             String attr = attribute.getName();
             AssertUtil.isTrue(StringUtils.hasText(attr), "属性异常");
             String value = attribute.getValue();
             AssertUtil.isTrue(StringUtils.hasText(value), "属性值异常");
         }
 
-        GoodsSpecification[] specifications = goodsAllinone.getSpecifications();
-        for (GoodsSpecification specification : specifications) {
-            String spec = specification.getSpecification();
-            AssertUtil.isTrue(StringUtils.hasText(spec), "规格异常");
-            String value = specification.getValue();
-            AssertUtil.isTrue(StringUtils.hasText(value), "规格值异常");
+        GoodsSpec[] specifications = goodsAllinone.getSpecifications();
+        for (GoodsSpec specification : specifications) {
+//            String spec = specification.getSpecification();
+//            AssertUtil.isTrue(StringUtils.hasText(spec), "规格异常");
+//            String value = specification.getValue();
+//            AssertUtil.isTrue(StringUtils.hasText(value), "规格值异常");
         }
 
         GoodsProduct[] products = goodsAllinone.getProducts();

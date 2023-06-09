@@ -10,14 +10,14 @@ import org.springframework.context.annotation.Configuration;
  * Author: leell
  * Date: 2023/4/8 20:53:24
  */
-//@Configuration
+@Configuration
 public class JacksonConfig {
     /**
      * Jackson 全局转化Long 类型为String，解决jackson序列化时Long 类型缺失精度问题
      *
      * @return Jackson20bjectMapperBuilderCustomizer 注入的对象
      */
-//    @Bean
+    @Bean
     public Jackson2ObjectMapperBuilderCustomizer jackson20bjectMapperBuilderCustomizer() {
         return jacksonobjectMapperBuilder -> jacksonobjectMapperBuilder
                 .serializerByType(Long.class, ToStringSerializer.instance)
