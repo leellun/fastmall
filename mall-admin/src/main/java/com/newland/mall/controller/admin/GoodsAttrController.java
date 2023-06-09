@@ -27,8 +27,7 @@ public class GoodsAttrController {
     @Autowired
     private GoodsAttrService goodsAttrService;
 
-
-    @Operation(description = "根据分类查询属性列表或参数列表")
+    @Operation(description = "查询属性列表或参数列表")
     @GetMapping(value = "/list")
     @ResponseBody
     public RestResponse<PageInfo<GoodsAttr>> getList(@Parameter(description = "0表示属性，1表示参数") @RequestParam(value = "type", required = false) Integer type,
@@ -36,15 +35,6 @@ public class GoodsAttrController {
                                                      @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo) {
 
         PageInfo<GoodsAttr> productAttributeList = goodsAttrService.getList(type, pageSize, pageNo);
-        return RestResponse.ok(productAttributeList);
-    }
-
-    @Operation(description = "根据分类获取所有规格属性和销售属性")
-    @GetMapping(value = "/all/{cid}")
-    @ResponseBody
-    public RestResponse<List<GoodsAttr>> getAllList(@PathVariable Long cid, @Parameter(description = "0表示属性，1表示参数") @RequestParam(value = "type") Integer type) {
-
-        List<GoodsAttr> productAttributeList = goodsAttrService.getList(cid, type);
         return RestResponse.ok(productAttributeList);
     }
 
@@ -64,7 +54,7 @@ public class GoodsAttrController {
         return RestResponse.success("更新成功");
     }
 
-    @Operation(description = "查询单个商品属性")
+    @Operation(description = "查询单个属性")
     @GetMapping(value = "/{id}")
     @ResponseBody
     public RestResponse<GoodsAttr> getItem(@PathVariable Long id) {
@@ -86,5 +76,15 @@ public class GoodsAttrController {
     public RestResponse<List<GoodsAttrInfoVo>> getAttrInfo(@PathVariable Long goodsCategoryId) {
         List<GoodsAttrInfoVo> productAttrInfoList = goodsAttrService.getGoodsAttrInfo(goodsCategoryId);
         return RestResponse.ok(productAttrInfoList);
+    }
+
+    @Operation(description = "根据分组获取所有规格属性和销售属性")
+    @Parameter(name = "type",description = "0表示属性，1表示参数")
+    @GetMapping(value = "/all/{gid}")
+    @ResponseBody
+    public RestResponse<List<GoodsAttr>> getAllList(@PathVariable Long gid, @RequestParam(value = "type") Integer type) {
+
+        List<GoodsAttr> productAttributeList = goodsAttrService.getListAttr(gid, type);
+        return RestResponse.ok(productAttributeList);
     }
 }

@@ -21,11 +21,11 @@ public interface GoodsAttrService extends IService<GoodsAttr> {
     PageInfo<GoodsAttr> getList(Integer type, Integer pageSize, Integer pageNo);
 
     /**
-     * 获取属性分类下所有属性，包含规格属性和销售属性
-     * @param cid
+     * 获取属性分组下所有属性，包含规格属性和销售属性
+     * @param gid
      * @return
      */
-    List<GoodsAttr> getList(Long cid, Integer type);
+    List<GoodsAttr> getListAttr(Long gid, Integer type);
     /**
      * 添加商品属性
      */

@@ -235,10 +235,10 @@
     <include refid="Base_Column_List" />
     from mall_goods_attr t1 where t1.deleted =0  <if test="type!=null"> and t1.type = #{type}</if>
   </select>
-  <select id="listByCidAndType" resultMap="BaseResultMap">
+  <select id="listByGidAndType" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from mall_goods_attr t1 right join mall_goods_group_attr_relation t2 on t1.id=t2.goods_attr_id left join mall_goods_group t3 on t3.id=t2.goods_group_id
-    where t2.category_id =#{cid} and t1.type = #{type} and t1.deleted =0 order by t1.attr_sort desc
+    from mall_goods_attr t1 right join mall_goods_group_attr_relation t2 on t1.id=t2.goods_attr_id
+    where t2.goods_group_id =#{gid} and t1.type = #{type} and t1.deleted =0 order by t1.attr_sort desc
   </select>
 </mapper>

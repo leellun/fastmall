@@ -2,6 +2,7 @@ package com.newland.mall.mapper;
 
 import com.newland.mall.entity.GoodsGroupAttrRelation;
 import com.newland.mybatis.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -11,4 +12,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface GoodsGroupAttrRelationMapper extends BaseMapper<GoodsGroupAttrRelation> {
+    /**
+     * 通过分组删除
+     * @param gid 分组id
+     */
+    void deleteByGroupId(@Param("gid") Long gid);
 }

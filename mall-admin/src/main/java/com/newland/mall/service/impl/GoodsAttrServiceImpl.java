@@ -37,8 +37,8 @@ public class GoodsAttrServiceImpl extends ServiceImpl<GoodsAttrMapper, GoodsAttr
     }
 
     @Override
-    public List<GoodsAttr> getList(Long cid, Integer type) {
-        return baseMapper.listByCidAndType(cid, type);
+    public List<GoodsAttr> getListAttr(Long gid, Integer type) {
+        return baseMapper.listByGidAndType(gid, type);
     }
 
     @Override

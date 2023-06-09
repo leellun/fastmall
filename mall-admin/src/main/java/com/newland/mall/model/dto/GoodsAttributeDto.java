@@ -1,7 +1,5 @@
 package com.newland.mall.model.dto;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.newland.mall.validator.IntOptions;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
@@ -15,10 +13,6 @@ import lombok.Data;
 @Schema(description = "属性")
 @Data
 public class GoodsAttributeDto {
-    @Schema(description ="属性分类ID")
-    @NotEmpty(message = "属性分类不能为空")
-    @JsonSerialize(using= ToStringSerializer.class)
-    private Long goodsAttributeCategoryId;
 
     @Schema(description ="属性名称")
     @NotEmpty(message = "属性名称不能为空")

@@ -1,5 +1,6 @@
 package com.newland.mall.mapper;
 
+import com.newland.mall.entity.GoodsAttr;
 import com.newland.mall.entity.GoodsGroup;
 import com.newland.mall.model.vo.GoodsAttributeCategoryItemVo;
 import com.newland.mybatis.mapper.BaseMapper;
@@ -34,4 +35,12 @@ public interface GoodsGroupMapper extends BaseMapper<GoodsGroup> {
      * @return
      */
     List<GoodsAttributeCategoryItemVo> listWithAttr();
+    /**
+     * 商品属性
+     *
+     * @param gid  商品分组
+     * @param type 类型
+     * @return 属性列表
+     */
+    List<GoodsAttr> listByGidAndType(@Param("gid") Long gid, @Param("type") Integer type);
 }

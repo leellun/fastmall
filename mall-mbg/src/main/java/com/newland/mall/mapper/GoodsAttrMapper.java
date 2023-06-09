@@ -43,9 +43,9 @@ public interface GoodsAttrMapper extends BaseMapper<GoodsAttr> {
     /**
      * 商品属性
      *
-     * @param cid  商品分类
+     * @param gid  商品分类
      * @param type 类型
      * @return 属性列表
      */
-    List<GoodsAttr> listByCidAndType(@Param("cid") Long cid, @Param("type") Integer type);
+    List<GoodsAttr> listByGidAndType(@Param("gid") Long gid, @Param("type") Integer type);
 }
