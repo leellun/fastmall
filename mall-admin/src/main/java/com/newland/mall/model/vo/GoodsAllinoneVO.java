@@ -1,9 +1,6 @@
 package com.newland.mall.model.vo;
 
-import com.newland.mall.entity.Goods;
-import com.newland.mall.entity.GoodsAttrValue;
-import com.newland.mall.entity.GoodsProduct;
-import com.newland.mall.entity.GoodsSpec;
+import com.newland.mall.entity.*;
 import lombok.Data;
 
 import java.util.List;
@@ -20,4 +17,5 @@ public class GoodsAllinoneVO {
     List<GoodsAttrValue> attributes;
     List<GoodsProduct> products;
     List<Long> categoryIds;
+    GoodsGroup goodsGroup;
 }

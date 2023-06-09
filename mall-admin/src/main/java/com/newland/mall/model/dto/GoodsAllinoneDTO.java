@@ -15,5 +15,5 @@ public class GoodsAllinoneDTO {
     Goods goods;
     GoodsSpec[] specifications;
     GoodsAttrValue[] attributes;
-    GoodsProduct[] products;
+    GoodsProductDTO[] goodsProducts;
 }

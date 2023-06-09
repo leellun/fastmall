@@ -39,4 +39,5 @@ public class GoodsProductServiceImpl extends ServiceImpl<GoodsProductMapper, Goo
     public int reduceStock(Long productId, Integer number) {
         return baseMapper.reduceStock(productId, number);
     }
+
 }

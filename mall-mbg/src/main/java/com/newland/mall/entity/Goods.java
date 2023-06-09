@@ -43,7 +43,7 @@ public class Goods  extends BaseEntity implements Serializable {
      */
     @Schema(name ="商品所属类目ID")
     @JsonSerialize(using= ToStringSerializer.class)
-    private Long attributeCategoryId;
+    private Long attrGroupId;
 
     /**
      */
@@ -130,6 +130,7 @@ public class Goods  extends BaseEntity implements Serializable {
     @Schema(name ="商品详细介绍，是富文本格式")
     private String detail;
 
+    @Schema(name ="商品相册")
     private List<String> galleryList;
 
     private static final long serialVersionUID = 1L;

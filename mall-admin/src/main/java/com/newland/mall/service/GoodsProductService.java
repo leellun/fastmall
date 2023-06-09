@@ -44,4 +44,5 @@ public interface GoodsProductService extends IService<GoodsProduct> {
      * @return
      */
     int reduceStock(Long productId, Integer number);
+
 }

@@ -26,12 +26,6 @@ public class GoodsSpec extends BaseEntity implements Serializable {
     @JsonSerialize(using= ToStringSerializer.class)
     private Long goodsId;
 
-    /**
-     * sku id
-     */
-    @Schema(name ="sku id")
-    @JsonSerialize(using= ToStringSerializer.class)
-    private Long productId;
 
     /**
      * 商品参数id

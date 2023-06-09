@@ -29,10 +29,12 @@ public class ServiceImpl<M extends BaseMapper<T>, T> implements IService<T> {
         return baseMapper.selectByPrimaryKey(id);
     }
 
+    @Override
     public int updateById(T t) {
         return baseMapper.updateByPrimaryKeySelective(t);
     }
 
+    @Override
     public boolean saveBatch(Collection<T> entityList) {
         return saveBatch(entityList, DEFAULT_BATCH_SIZE);
     }
