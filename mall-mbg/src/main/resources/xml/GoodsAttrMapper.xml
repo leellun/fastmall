@@ -235,10 +235,18 @@
     <include refid="Base_Column_List" />
     from mall_goods_attr t1 where t1.deleted =0  <if test="type!=null"> and t1.type = #{type}</if>
   </select>
-  <select id="listByCidAndType" resultMap="BaseResultMap">
+  <select id="listByGidAndType" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
-    from mall_goods_attr t1 right join mall_goods_group_attr_relation t2 on t1.id=t2.goods_attr_id left join mall_goods_group t3 on t3.id=t2.goods_group_id
-    where t2.category_id =#{cid} and t1.type = #{type} and t1.deleted =0 order by t1.attr_sort desc
+    t1.id, t1.name, t1.select_type, t1.input_type, t1.attr_sort, t1.filter_type, t1.search_type,
+    t1.related_status, t1.hand_add_status, t1.type, t1.has_pic, t1.create_time
+    from mall_goods_attr t1 right join mall_goods_group_attr_relation t2 on t1.id=t2.goods_attr_id and t2.deleted =0
+    where t2.goods_group_id =#{gid} and t1.type = #{type}  order by t1.attr_sort desc
+  </select>
+  <select id="listUnBindByGidAndType" resultMap="BaseResultMap">
+    select
+    t1.id, t1.name, t1.select_type, t1.input_type, t1.attr_sort, t1.filter_type, t1.search_type,
+    t1.related_status, t1.hand_add_status, t1.type, t1.has_pic, t1.create_time
+    from mall_goods_attr t1 left join mall_goods_group_attr_relation t2 on t1.id=t2.goods_attr_id and t2.goods_group_id =#{gid} and t2.deleted =0
+    where t2.goods_group_id is null and t1.type = #{type} and t1.deleted =0 order by t1.attr_sort desc
   </select>
 </mapper>

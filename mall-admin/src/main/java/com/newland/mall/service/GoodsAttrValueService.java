@@ -30,4 +30,17 @@ public interface GoodsAttrValueService extends IService<GoodsAttrValue> {
      * @param id
      */
     void delete(Long id);
+
+    /**
+     * 更新商品属性
+     * @param goodsId 商品id
+     * @param attributes 属性列表
+     */
+    void saveAttributes(Long goodsId, List<GoodsAttrValue> attributes);
+    /**
+     * 更新商品属性
+     * @param goodsId 商品id
+     * @param attributes 属性列表
+     */
+    void updateAttributes(Long goodsId, List<GoodsAttrValue> attributes);
 }

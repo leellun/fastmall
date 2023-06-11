@@ -41,8 +41,12 @@ public interface CartMapper extends BaseMapper<Cart> {
      * @param userId 用户id
      * @param productIds 货物id列表
      */
-    Integer deleteByUserIdAndProductIds(@Param("userId") Long userId,@Param("productIds") List<Integer> productIds);
-
+    Integer deleteByUserIdAndProductIds(@Param("userId") Long userId,@Param("productIds") List<Long> productIds);
+    /**
+     * 删除
+     * @param productIds 货物id列表
+     */
+    Integer deleteByProductIds(@Param("productIds") List<Long> productIds);
     /**
      * 更新选中状态
      * @param userId 用户id

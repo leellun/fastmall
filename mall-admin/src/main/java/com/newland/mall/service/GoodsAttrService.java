@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.newland.mall.entity.GoodsAttr;
 import com.newland.mall.model.dto.GoodsAttributeDto;
 import com.newland.mall.model.vo.GoodsAttrInfoVo;
+import com.newland.mall.model.vo.GoodsAttrWithValueVo;
 import com.newland.mybatis.service.IService;
 
 import java.util.List;
@@ -21,11 +22,11 @@ public interface GoodsAttrService extends IService<GoodsAttr> {
     PageInfo<GoodsAttr> getList(Integer type, Integer pageSize, Integer pageNo);
 
     /**
-     * 获取属性分类下所有属性，包含规格属性和销售属性
-     * @param cid
+     * 获取属性分组下所有属性，包含规格属性和销售属性
+     * @param gid
      * @return
      */
-    List<GoodsAttr> getList(Long cid, Integer type);
+    List<GoodsAttr> getListAttr(Long gid, Integer type);
     /**
      * 添加商品属性
      */
@@ -54,4 +55,20 @@ public interface GoodsAttrService extends IService<GoodsAttr> {
      * @return
      */
     List<GoodsAttrInfoVo> getGoodsAttrInfo(Long goodsCategoryId);
+
+    /**
+     * 非绑定属性
+     * @param gid 分组id
+     * @param type 类型
+     * @return 列表
+     */
+    PageInfo<GoodsAttr> getUnBindListAttr(Long gid, Integer type,Integer pageNo,Integer pageSize);
+
+    /**
+     * 获取带值 属性
+     * @param gid 分组id
+     * @param type 类型
+     * @return 列表
+     */
+    List<GoodsAttrWithValueVo> getBindsWithValue(Long gid, Integer type);
 }

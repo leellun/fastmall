@@ -2,12 +2,12 @@ package com.newland.mall.service.impl;
 
 import com.github.pagehelper.PageInfo;
 import com.newland.mall.entity.GoodsAttr;
-import com.newland.mall.entity.GoodsGroup;
 import com.newland.mall.mapper.GoodsAttrMapper;
 import com.newland.mall.mapper.GoodsGroupAttrRelationMapper;
-import com.newland.mall.mapper.GoodsGroupMapper;
+import com.newland.mall.mapper.GoodsValueMapper;
 import com.newland.mall.model.dto.GoodsAttributeDto;
 import com.newland.mall.model.vo.GoodsAttrInfoVo;
+import com.newland.mall.model.vo.GoodsAttrWithValueVo;
 import com.newland.mall.service.GoodsAttrService;
 import com.newland.mybatis.page.PageEntity;
 import com.newland.mybatis.page.PageWrapper;
@@ -17,19 +17,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 商品属性参数表 服务实现类
+ *
  * @author leellun
  * @since 2023-06-08 13:44:15
  */
 @Service
 public class GoodsAttrServiceImpl extends ServiceImpl<GoodsAttrMapper, GoodsAttr> implements GoodsAttrService {
     @Autowired
-    private GoodsGroupMapper goodsGroupMapper;
-    @Autowired
     private GoodsGroupAttrRelationMapper goodsGroupAttrRelationMapper;
+    @Autowired
+    private GoodsValueMapper goodsValueMapper;
 
     @Override
     public PageInfo<GoodsAttr> getList(Integer type, Integer pageSize, Integer pageNo) {
@@ -37,8 +39,8 @@ public class GoodsAttrServiceImpl extends ServiceImpl<GoodsAttrMapper, GoodsAttr
     }
 
     @Override
-    public List<GoodsAttr> getList(Long cid, Integer type) {
-        return baseMapper.listByCidAndType(cid, type);
+    public List<GoodsAttr> getListAttr(Long gid, Integer type) {
+        return baseMapper.listByGidAndType(gid, type);
     }
 
     @Override
@@ -75,8 +77,8 @@ public class GoodsAttrServiceImpl extends ServiceImpl<GoodsAttrMapper, GoodsAttr
         //获取分类
         GoodsAttr productAttribute = baseMapper.selectByPrimaryKey(ids.get(0));
         Integer type = productAttribute.getType();
-
         int count = baseMapper.deleteBatchIds(ids);
+        goodsGroupAttrRelationMapper.deleteByAttrIds(ids);
 //        GoodsGroup productAttributeCategory = goodsGroupMapper.selectByPrimaryKey(productAttribute.getGoodsAttributeCategoryId());
 //        //删除完成后修改数量
 //        if (type == 0) {
@@ -99,5 +101,25 @@ public class GoodsAttrServiceImpl extends ServiceImpl<GoodsAttrMapper, GoodsAttr
     @Override
     public List<GoodsAttrInfoVo> getGoodsAttrInfo(Long goodsCategoryId) {
         return baseMapper.getGoodsAttrInfo(goodsCategoryId);
+    }
+
+    @Override
+    public PageInfo<GoodsAttr> getUnBindListAttr(Long gid, Integer type, Integer pageNo, Integer pageSize) {
+        return PageWrapper.page(PageEntity.page(pageNo, pageSize), () -> baseMapper.listUnBindByGidAndType(gid, type));
+    }
+
+    @Override
+    public List<GoodsAttrWithValueVo> getBindsWithValue(Long gid, Integer type) {
+        List<GoodsAttr> attrs = this.getListAttr(gid, type);
+        List<GoodsAttrWithValueVo> list = new ArrayList<>(attrs.size());
+        for (GoodsAttr attr : attrs) {
+            GoodsAttrWithValueVo vo = new GoodsAttrWithValueVo();
+            BeanUtils.copyProperties(attr, vo);
+            if (attr.getInputType() == 1) {
+                vo.setValues(goodsValueMapper.listByAttrId(attr.getId()));
+            }
+            list.add(vo);
+        }
+        return list;
     }
 }

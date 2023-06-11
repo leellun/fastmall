@@ -12,14 +12,15 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <resultMap id="ResultWithAttrMap" type="com.newland.mall.model.vo.GoodsAttributeCategoryItemVo" extends="com.newland.mall.mapper.GoodsGroupMapper.BaseResultMap">
-    <collection property="productAttributeList" columnPrefix="attr_" resultMap="com.newland.mall.mapper.GoodsAttributeMapper.BaseResultMap">
+    <collection property="productAttributeList" columnPrefix="attr_" resultMap="com.newland.mall.mapper.GoodsAttrMapper.BaseResultMap">
     </collection>
   </resultMap>
+
   <sql id="Base_Column_List">
     id, name, category_id, attribute_count, param_count, create_time, update_time, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from mall_goods_group
     where id = #{id,jdbcType=BIGINT}
@@ -29,12 +30,12 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.newland.mall.entity.GoodsGroup">
-    insert into mall_goods_group (id, name, category_id, 
-      attribute_count, param_count, create_time, 
-      update_time, deleted)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{categoryId,jdbcType=BIGINT}, 
-      #{attributeCount,jdbcType=INTEGER}, #{paramCount,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
+    insert into mall_goods_group (id, name, category_id,
+    attribute_count, param_count, create_time,
+    update_time, deleted)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{categoryId,jdbcType=BIGINT},
+    #{attributeCount,jdbcType=INTEGER}, #{paramCount,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+    #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.newland.mall.entity.GoodsGroup">
     insert into mall_goods_group
@@ -121,12 +122,12 @@
   <update id="updateByPrimaryKey" parameterType="com.newland.mall.entity.GoodsGroup">
     update mall_goods_group
     set name = #{name,jdbcType=VARCHAR},
-      category_id = #{categoryId,jdbcType=BIGINT},
-      attribute_count = #{attributeCount,jdbcType=INTEGER},
-      param_count = #{paramCount,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      deleted = #{deleted,jdbcType=BIT}
+    category_id = #{categoryId,jdbcType=BIGINT},
+    attribute_count = #{attributeCount,jdbcType=INTEGER},
+    param_count = #{paramCount,jdbcType=INTEGER},
+    create_time = #{createTime,jdbcType=TIMESTAMP},
+    update_time = #{updateTime,jdbcType=TIMESTAMP},
+    deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="deleteLogicalByPrimaryKey" parameterType="java.lang.Long">
@@ -144,6 +145,12 @@
     <include refid="Base_Column_List"/>
     from mall_goods_group
     where deleted = 0 order by id asc
+  </select>
+  <select id="listByCategoryId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from mall_goods_group
+    where deleted = 0 and category_id = #{categoryId}
   </select>
   <select id="listWithAttr" resultMap="ResultWithAttrMap">
     SELECT

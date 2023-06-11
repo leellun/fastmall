@@ -1,6 +1,7 @@
 package com.newland.mall.mapper;
 
 import com.newland.mall.entity.GoodsProduct;
+import com.newland.mall.model.vo.GoodsProductVo;
 import com.newland.mybatis.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -27,6 +28,12 @@ public interface GoodsProductMapper extends BaseMapper<GoodsProduct> {
      * @return
      */
     List<GoodsProduct> listByGoodsId(@Param("goodsId") Long goodsId);
+    /**
+     *
+     * @param goodsId
+     * @return
+     */
+    List<GoodsProductVo> listWithSpecByGoodsId(@Param("goodsId") Long goodsId);
 
     /**
      * 货品数
@@ -41,4 +48,11 @@ public interface GoodsProductMapper extends BaseMapper<GoodsProduct> {
      * @return
      */
     int reduceStock(@Param("id") Long id,@Param("number") Integer num);
+
+    /**
+     * 删除
+     * @param productIds product id列表
+     * @return 数量
+     */
+    Integer deleteByIds(@Param("productIds") List<Long> productIds);
 }

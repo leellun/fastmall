@@ -17,7 +17,7 @@ public class LongListSerializer extends JsonSerializer<List<Long>> {
                           SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeStartArray();
         for (Long value : list) {
-            jsonGenerator.writeNumber(value);
+            jsonGenerator.writeString(String.valueOf(value));
         }
         jsonGenerator.writeEndArray();
     }

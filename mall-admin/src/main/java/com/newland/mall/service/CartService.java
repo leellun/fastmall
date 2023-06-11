@@ -57,7 +57,12 @@ public interface CartService extends IService<Cart> {
      * @param userId
      * @param productIds
      */
-    void delete(Long userId, List<Integer> productIds);
+    void delete(Long userId, List<Long> productIds);
+    /**
+     * 删除失效购物车
+     * @param productIds 产品id
+     */
+    void deleteProductsCart(List<Long> productIds);
 
     /**
      * 购物车下单

@@ -11,9 +11,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 商品规格表(销售) 服务实现类
+ *
  * @author leellun
  * @since 2023-06-08 13:44:15
  */
@@ -49,5 +51,44 @@ public class GoodsSpecServiceImpl extends ServiceImpl<GoodsSpecMapper, GoodsSpec
 //            }
         }
         return goodsSpecificationVOS;
+    }
+
+    @Override
+    public Map<String, GoodsSpec> saveGoodsSpecs(Long goodsId, List<GoodsSpec> specifications) {
+        Map<String, GoodsSpec> specMap = new HashMap<>(specifications.size());
+        // 商品规格表_goods_specification
+        for (GoodsSpec specification : specifications) {
+            specification.setGoodsId(goodsId);
+            baseMapper.insertSelective(specification);
+            specMap.put(specification.getName() + "=" + specification.getValue(), specification);
+        }
+        return specMap;
+    }
+
+    @Override
+    public Map<String, GoodsSpec> updateGoodsSpecs(Long goodsId, List<GoodsSpec> specifications) {
+        List<Long> specIdsDb = baseMapper.listByGoodsId(goodsId).stream().map(GoodsSpec::getId).collect(Collectors.toList());
+        List<Long> specIds = new ArrayList<>();
+        Map<String, GoodsSpec> specMap = new HashMap<>(specifications.size());
+        // 商品规格表_goods_specification
+        for (GoodsSpec specification : specifications) {
+            if (specification.getId() != null && specIdsDb.contains(specification.getId())) {
+                specIds.add(specification.getId());
+                baseMapper.updateByPrimaryKeySelective(specification);
+            } else {
+                specification.setGoodsId(goodsId);
+                baseMapper.insertSelective(specification);
+            }
+            specMap.put(specification.getName() + "=" + specification.getValue(), specification);
+        }
+        specIdsDb.removeAll(specIds);
+        List<GoodsSpec> deleteItems = specIdsDb.stream().map(id -> {
+            GoodsSpec goodsSpec = new GoodsSpec();
+            goodsSpec.setId(id);
+            goodsSpec.setDeleted(1);
+            return goodsSpec;
+        }).collect(Collectors.toList());
+        this.updateBatch(deleteItems);
+        return specMap;
     }
 }

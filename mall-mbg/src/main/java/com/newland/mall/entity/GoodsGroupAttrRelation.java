@@ -23,21 +23,18 @@ public class GoodsGroupAttrRelation extends BaseEntity implements Serializable {
      * 属性id
      */
     @Schema(name ="属性id")
-    @JsonSerialize(using= ToStringSerializer.class)
     private Long goodsAttrId;
 
     /**
      * 分组id
      */
     @Schema(name ="分组id")
-    @JsonSerialize(using= ToStringSerializer.class)
     private Long goodsGroupId;
 
     /**
      * 分类id
      */
     @Schema(name ="分类id")
-    @JsonSerialize(using= ToStringSerializer.class)
     private Long goodsCategoryId;
 
 

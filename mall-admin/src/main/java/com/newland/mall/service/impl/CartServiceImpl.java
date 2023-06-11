@@ -7,13 +7,16 @@ import com.newland.mall.exception.BusinessException;
 import com.newland.mall.mapper.*;
 import com.newland.mall.model.dto.wx.CartDTO;
 import com.newland.mall.model.vo.wx.CartCheckoutVO;
-import com.newland.mall.service.*;
+import com.newland.mall.service.CartService;
+import com.newland.mall.service.CouponVerifyService;
+import com.newland.mall.service.GoodsProductService;
 import com.newland.mall.utils.AssertUtil;
 import com.newland.mybatis.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -32,6 +35,7 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
     @Autowired
     private GoodsMapper goodsMapper;
     @Autowired
+    @Lazy
     private GoodsProductService goodsProductService;
     @Autowired
     private AddressMapper addressMapper;
@@ -49,7 +53,7 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
         Cart cart = new Cart();
         cart.setPrice(price);
         cart.setPicUrl(url);
-        cart.setGoodsSn(goodsSn);
+        cart.setProductSn(goodsSn);
         cart.setGoodsName(goodsName);
         cart.setProductId(productId);
         baseMapper.updateByProductId(cart);
@@ -93,7 +97,7 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
             AssertUtil.isNotTrue(number > product.getNumber(), "库存不足");
             Cart cart = new Cart();
             BeanUtils.copyProperties(cartDTO, cart);
-            cart.setGoodsSn(goods.getGoodsSn());
+            cart.setProductSn(product.getProductSn());
             cart.setGoodsName((goods.getName()));
             if (StringUtils.isEmpty(product.getUrl())) {
                 cart.setPicUrl(goods.getPicUrl());
@@ -101,7 +105,7 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
                 cart.setPicUrl(product.getUrl());
             }
             cart.setPrice(product.getPrice());
-            cart.setSpecifications(product.getSpecifications());
+            cart.setProductId(productId);
             cart.setUserId(userId);
             cart.setChecked(BasicEnum.YES.getKey());
             baseMapper.insertSelective(cart);
@@ -136,7 +140,7 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
             AssertUtil.isNotTrue(number > product.getNumber(), "库存不足");
             Cart cart = new Cart();
             BeanUtils.copyProperties(cartDTO, cart);
-            cart.setGoodsSn(goods.getGoodsSn());
+            cart.setProductSn(product.getProductSn());
             cart.setGoodsName((goods.getName()));
             if (StringUtils.isEmpty(product.getUrl())) {
                 cart.setPicUrl(goods.getPicUrl());
@@ -144,7 +148,7 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
                 cart.setPicUrl(product.getUrl());
             }
             cart.setPrice(product.getPrice());
-            cart.setSpecifications(product.getSpecifications());
+            cart.setProductId(product.getId());
             cart.setUserId(userId);
             cart.setChecked(BasicEnum.YES.getKey());
             baseMapper.insertSelective(cart);
@@ -195,11 +199,19 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
     }
 
     @Override
-    public void delete(Long userId, List<Integer> productIds) {
+    public void delete(Long userId, List<Long> productIds) {
         AssertUtil.isTrue(productIds.size() > 0, "请选择删除商品");
         if (baseMapper.deleteByUserIdAndProductIds(userId, productIds) == 0) {
             throw new BusinessException("删除失败");
         }
+    }
+
+    @Override
+    public void deleteProductsCart(List<Long> productIds) {
+        if (productIds.size() == 0) {
+            return;
+        }
+        baseMapper.deleteByProductIds(productIds);
     }
 
     @Override

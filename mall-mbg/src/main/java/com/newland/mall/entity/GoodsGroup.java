@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
  * @date 2023-06-08 13:44:15
  */
 @Data
-@Schema(name ="产品属性分类表")
+@Schema(name ="产品属性分组表")
 public class GoodsGroup extends BaseEntity implements Serializable {
 
     /**

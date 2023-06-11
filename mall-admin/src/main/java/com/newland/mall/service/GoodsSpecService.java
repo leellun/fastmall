@@ -5,6 +5,7 @@ import com.newland.mall.model.vo.wx.GoodsSpecificationVO;
 import com.newland.mybatis.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 商品规格表(销售) 服务类
@@ -31,4 +32,19 @@ public interface GoodsSpecService extends IService<GoodsSpec> {
      * @return
      */
     List<GoodsSpecificationVO> getSpecificationVoList(Long goodsId);
+
+    /**
+     * 保存商品规格
+     * @param goodsId 商品id
+     * @param specifications 规格
+     * @return 规格对应
+     */
+    Map<String, GoodsSpec> saveGoodsSpecs(Long goodsId, List<GoodsSpec> specifications);
+    /**
+     * 保存商品规格
+     * @param goodsId 商品id
+     * @param specifications 规格
+     * @return 规格对应
+     */
+    Map<String, GoodsSpec> updateGoodsSpecs(Long goodsId, List<GoodsSpec> specifications);
 }

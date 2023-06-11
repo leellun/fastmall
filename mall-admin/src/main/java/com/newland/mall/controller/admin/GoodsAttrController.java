@@ -5,6 +5,7 @@ import com.newland.mall.entity.GoodsAttr;
 import com.newland.mall.model.RestResponse;
 import com.newland.mall.model.dto.GoodsAttributeDto;
 import com.newland.mall.model.vo.GoodsAttrInfoVo;
+import com.newland.mall.model.vo.GoodsAttrWithValueVo;
 import com.newland.mall.service.GoodsAttrService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -21,14 +22,13 @@ import java.util.List;
  * @since 2023-06-04 21:50:54
  */
 @RestController
-@RequestMapping("/admin/goodsAttribute")
+@RequestMapping("/admin/goodsAttr")
 @Tag(name = "商品属性参数表", description = "商品属性参数表")
 public class GoodsAttrController {
     @Autowired
     private GoodsAttrService goodsAttrService;
 
-
-    @Operation(description = "根据分类查询属性列表或参数列表")
+    @Operation(description = "查询属性列表或参数列表")
     @GetMapping(value = "/list")
     @ResponseBody
     public RestResponse<PageInfo<GoodsAttr>> getList(@Parameter(description = "0表示属性，1表示参数") @RequestParam(value = "type", required = false) Integer type,
@@ -36,15 +36,6 @@ public class GoodsAttrController {
                                                      @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo) {
 
         PageInfo<GoodsAttr> productAttributeList = goodsAttrService.getList(type, pageSize, pageNo);
-        return RestResponse.ok(productAttributeList);
-    }
-
-    @Operation(description = "根据分类获取所有规格属性和销售属性")
-    @GetMapping(value = "/all/{cid}")
-    @ResponseBody
-    public RestResponse<List<GoodsAttr>> getAllList(@PathVariable Long cid, @Parameter(description = "0表示属性，1表示参数") @RequestParam(value = "type") Integer type) {
-
-        List<GoodsAttr> productAttributeList = goodsAttrService.getList(cid, type);
         return RestResponse.ok(productAttributeList);
     }
 
@@ -64,7 +55,7 @@ public class GoodsAttrController {
         return RestResponse.success("更新成功");
     }
 
-    @Operation(description = "查询单个商品属性")
+    @Operation(description = "查询单个属性")
     @GetMapping(value = "/{id}")
     @ResponseBody
     public RestResponse<GoodsAttr> getItem(@PathVariable Long id) {
@@ -86,5 +77,35 @@ public class GoodsAttrController {
     public RestResponse<List<GoodsAttrInfoVo>> getAttrInfo(@PathVariable Long goodsCategoryId) {
         List<GoodsAttrInfoVo> productAttrInfoList = goodsAttrService.getGoodsAttrInfo(goodsCategoryId);
         return RestResponse.ok(productAttrInfoList);
+    }
+
+    @Operation(description = "根据分组获取所有规格属性和销售属性")
+    @Parameter(name = "type",description = "0表示属性，1表示参数")
+    @GetMapping(value = "/all/{gid}")
+    @ResponseBody
+    public RestResponse<List<GoodsAttr>> getAllList(@PathVariable Long gid, @RequestParam(value = "type") Integer type) {
+
+        List<GoodsAttr> productAttributeList = goodsAttrService.getListAttr(gid, type);
+        return RestResponse.ok(productAttributeList);
+    }
+    @Operation(description = "根据分组获取所有非绑定规格属性和销售属性")
+    @Parameter(name = "type",description = "0表示属性，1表示参数")
+    @GetMapping(value = "/unbind/{gid}")
+    @ResponseBody
+    public RestResponse<PageInfo<GoodsAttr>> getUnBindList(@PathVariable Long gid, @RequestParam(value = "type") Integer type,
+                                                           @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
+                                                           @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize                                                           ) {
+
+        PageInfo<GoodsAttr> productAttributeList = goodsAttrService.getUnBindListAttr(gid, type,pageNo,pageSize);
+        return RestResponse.ok(productAttributeList);
+    }
+    @Operation(description = "根据分组获取所有规格属性和销售属性")
+    @Parameter(name = "type",description = "0表示属性，1表示参数")
+    @GetMapping(value = "/bindWithValue/{gid}")
+    @ResponseBody
+    public RestResponse<List<GoodsAttrWithValueVo>> getBindsWithValue(@PathVariable Long gid, @RequestParam(value = "type") Integer type) {
+
+        List<GoodsAttrWithValueVo> productAttributeList = goodsAttrService.getBindsWithValue(gid, type);
+        return RestResponse.ok(productAttributeList);
     }
 }

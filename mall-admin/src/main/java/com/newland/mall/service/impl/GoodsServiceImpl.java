@@ -6,11 +6,9 @@ import com.newland.mall.entity.*;
 import com.newland.mall.enumeration.BasicEnum;
 import com.newland.mall.enums.CollectTypeEnum;
 import com.newland.mall.mapper.GoodsMapper;
+import com.newland.mall.mapper.GoodsSaleAttrMapper;
 import com.newland.mall.model.dto.GoodsAllinoneDTO;
-import com.newland.mall.model.vo.BrandAndCategoryVO;
-import com.newland.mall.model.vo.BrandVO;
-import com.newland.mall.model.vo.CateVO;
-import com.newland.mall.model.vo.GoodsAllinoneVO;
+import com.newland.mall.model.vo.*;
 import com.newland.mall.model.vo.wx.CommentVO;
 import com.newland.mall.model.vo.wx.GoodsDetailVO;
 import com.newland.mall.model.vo.wx.GoodsSpecificationVO;
@@ -42,13 +40,13 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     @Autowired
     private GoodsSpecService goodsSpecService;
     @Autowired
+    private GoodsSaleAttrMapper goodsSaleAttrMapper;
+    @Autowired
     private GoodsAttrValueService goodsAttrValueService;
     @Autowired
     private CategoryService categoryService;
     @Autowired
     private BrandService brandService;
-    @Autowired
-    private CartService cartService;
     @Autowired
     private IssueService issueService;
     @Autowired
@@ -60,6 +58,9 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     @Autowired
     private ConfigHelper configHelper;
 
+    @Autowired
+    private GoodsSaleAttrService goodsSaleAttrService;
+
     @Override
     public PageInfo<Goods> list(Integer goodsId, String goodsSn, String name, PageEntity pageEntity) {
         return PageWrapper.page(pageEntity, () -> baseMapper.listGoods(goodsId, goodsSn, name));
@@ -69,9 +70,9 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     public GoodsAllinoneVO getDetail(Long id) {
         Goods goods = baseMapper.selectByPrimaryKey(id);
         AssertUtil.notNull(goods, "商品不存在");
-        List<GoodsProduct> products = goodsProductService.listGoodsProducts(id);
-        List<GoodsSpec> specifications = goodsSpecService.listGoodsSpecifications(id);
+        List<GoodsProductVo> products = goodsProductService.listWithSpecGoodsProducts(id);
         List<GoodsAttrValue> attributes = goodsAttrValueService.listGoodsAttributes(id);
+        List<GoodsSaleAttrVo> goodsSaleAttrVos = goodsSaleAttrMapper.listWithSpecByGoodsId(id);
 
         Long categoryId = goods.getCategoryId();
         Category category = categoryService.getById(categoryId);
@@ -85,7 +86,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         vo.setAttributes(attributes);
         vo.setProducts(products);
         vo.setCategoryIds(Arrays.asList(categoryIds));
-        vo.setSpecifications(specifications);
+        vo.setGoodsSaleAttrVos(goodsSaleAttrVos);
         return vo;
     }
 
@@ -134,17 +135,17 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         validate(goodsAllinone);
 
         Goods goods = goodsAllinone.getGoods();
-        GoodsAttrValue[] attributes = goodsAllinone.getAttributes();
-        GoodsSpec[] specifications = goodsAllinone.getSpecifications();
-        GoodsProduct[] products = goodsAllinone.getProducts();
+        List<GoodsAttrValue> attributes = goodsAllinone.getAttributes();
+        List<GoodsSaleAttrVo> specifications = goodsAllinone.getGoodsSaleAttrVos();
+        List<GoodsProductVo> products = goodsAllinone.getProducts();
 
         String name = goods.getName();
         AssertUtil.notNull(baseMapper.getByNameAndSale(name, BasicEnum.YES.getKey()), "商品名已经存在");
 
         // 商品表里面有一个字段retailPrice记录当前商品的最低价
         BigDecimal retailPrice = new BigDecimal(Integer.MAX_VALUE);
-        for (GoodsProduct product : products) {
-            BigDecimal productPrice = product.getPrice();
+        for (GoodsProductVo productDTO : products) {
+            BigDecimal productPrice = productDTO.getPrice();
             if (retailPrice.compareTo(productPrice) > 0) {
                 retailPrice = productPrice;
             }
@@ -154,37 +155,27 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         // 商品基本信息表_goods
         baseMapper.insert(goods);
 
-        // 商品规格表_goods_specification
-        for (GoodsSpec specification : specifications) {
-            specification.setGoodsId(goods.getId());
-            goodsSpecService.add(specification);
-        }
-
-        // 商品参数表_goods_attribute
-        for (GoodsAttrValue attribute : attributes) {
-            attribute.setGoodsId(goods.getId());
-            goodsAttrValueService.add(attribute);
-        }
-
-        // 商品货品表_product
-        for (GoodsProduct product : products) {
-            product.setGoodsId(goods.getId());
-            goodsProductService.add(product);
-        }
+        //更新商品参数
+        goodsAttrValueService.saveAttributes(goods.getId(), attributes);
+        //保存商品规格
+        List<GoodsSaleAttrVo> specMap = goodsSaleAttrService.saveSaleAttr(goods.getId(), specifications);
+        //更新商品sku信息
+        goodsProductService.saveProducts(goods, products, specMap);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void update(Long id, GoodsAllinoneDTO goodsAllinone) {
         validate(goodsAllinone);
         Goods goods = goodsAllinone.getGoods();
-        GoodsAttrValue[] attributes = goodsAllinone.getAttributes();
-        GoodsSpec[] specifications = goodsAllinone.getSpecifications();
-        GoodsProduct[] products = goodsAllinone.getProducts();
+        List<GoodsAttrValue> attributes = goodsAllinone.getAttributes();
+        List<GoodsSaleAttrVo> specifications = goodsAllinone.getGoodsSaleAttrVos();
+        List<GoodsProductVo> products = goodsAllinone.getProducts();
 
         // 商品表里面有一个字段retailPrice记录当前商品的最低价
         BigDecimal retailPrice = new BigDecimal(Integer.MAX_VALUE);
-        for (GoodsProduct product : products) {
-            BigDecimal productPrice = product.getPrice();
+        for (GoodsProductVo productDTO : products) {
+            BigDecimal productPrice = productDTO.getPrice();
             if (retailPrice.compareTo(productPrice) > 0) {
                 retailPrice = productPrice;
             }
@@ -195,41 +186,13 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         if (baseMapper.updateByPrimaryKeySelective(goods) == 0) {
             throw new RuntimeException("更新数据失败");
         }
-
-        // 商品规格表_goods_specification
-        for (GoodsSpec specification : specifications) {
-            // 目前只支持更新规格表的图片字段
-            if (specification.getUpdateTime() == null) {
-//                specification.setSpecification(null);
-                specification.setValue(null);
-                goodsSpecService.updateById(specification);
-            }
-        }
-
-        // 商品货品表_product
-        for (GoodsProduct product : products) {
-            if (product.getUpdateTime() == null) {
-                goodsProductService.updateById(product);
-            }
-        }
-
-        // 商品参数表_goods_attribute
-        for (GoodsAttrValue attribute : attributes) {
-            if (attribute.getId() == null || attribute.getId().equals(0L)) {
-                attribute.setGoodsId(goods.getId());
-                goodsAttrValueService.add(attribute);
-            } else if (attribute.getDeleted().equals(BasicEnum.YES.getKey())) {
-                goodsAttrValueService.delete(attribute.getId());
-            } else if (attribute.getUpdateTime() == null) {
-                goodsAttrValueService.updateById(attribute);
-            }
-        }
-
-        // 这里需要注意的是购物车_cart有些字段是拷贝商品的一些字段，因此需要及时更新
-        // 目前这些字段是goods_sn, goods_name, price, pic_url
-        for (GoodsProduct product : products) {
-            cartService.updateProduct(product.getId(), goods.getGoodsSn(), goods.getName(), product.getPrice(), product.getUrl());
-        }
+        //更新商品参数
+        goodsAttrValueService.updateAttributes(goods.getId(), attributes);
+        //保存商品规格
+        List<GoodsSaleAttrVo> specMap = goodsSaleAttrService.updateSaleAttr(goods.getId(), specifications);
+        //更新商品sku信息
+        goodsProductService.updateProducts(goods, products, specMap);
+        baseMapper.updateByPrimaryKeySelective(goods);
     }
 
     @Override
@@ -258,7 +221,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         // 商品属性
         List<GoodsAttrValue> goodsAttributes = goodsAttrValueService.listGoodsAttributes(id);
         // 商品规格 返回的是定制的GoodsSpeVo
-        List<GoodsSpecificationVO> GoodsSpes = goodsSpecService.getSpecificationVoList(id);
+        List<GoodsSpecificationVO> goodsSpes = goodsSpecService.getSpecificationVoList(id);
         // 商品规格对应的数量和价格
         List<GoodsProduct> goodsProducts = goodsProductService.listGoodsProducts(id);
         // 商品问题，这里是一些通用问题
@@ -278,7 +241,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         GoodsDetailVO vo = new GoodsDetailVO();
         vo.setInfo(info);
         vo.setAttribute(goodsAttributes);
-        vo.setSpecificationList(GoodsSpes);
+        vo.setSpecificationList(goodsSpes);
         vo.setProductList(goodsProducts);
         vo.setIssue(issues);
         vo.setBrand(brand);
@@ -345,8 +308,6 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         Goods goods = goodsAllinone.getGoods();
         String name = goods.getName();
         AssertUtil.isTrue(StringUtils.hasText(name), "商品名称不能为空");
-        String goodsSn = goods.getGoodsSn();
-        AssertUtil.isTrue(StringUtils.hasText(goodsSn), "商品编号不能为空");
         // 品牌商可以不设置，如果设置则需要验证品牌商存在
         Long brandId = goods.getBrandId();
         if (brandId != null && brandId != 0) {
@@ -358,7 +319,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
             AssertUtil.notNull(categoryService.getById(categoryId), "分类不存在");
         }
 
-        GoodsAttrValue[] attributes = goodsAllinone.getAttributes();
+        List<GoodsAttrValue> attributes = goodsAllinone.getAttributes();
         for (GoodsAttrValue attribute : attributes) {
             String attr = attribute.getName();
             AssertUtil.isTrue(StringUtils.hasText(attr), "属性异常");
@@ -366,23 +327,21 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
             AssertUtil.isTrue(StringUtils.hasText(value), "属性值异常");
         }
 
-        GoodsSpec[] specifications = goodsAllinone.getSpecifications();
-        for (GoodsSpec specification : specifications) {
-//            String spec = specification.getSpecification();
-//            AssertUtil.isTrue(StringUtils.hasText(spec), "规格异常");
-//            String value = specification.getValue();
-//            AssertUtil.isTrue(StringUtils.hasText(value), "规格值异常");
+        List<GoodsSaleAttrVo> specifications = goodsAllinone.getGoodsSaleAttrVos();
+        for (GoodsSaleAttrVo specification : specifications) {
+            String spec = specification.getName();
+            AssertUtil.isTrue(StringUtils.hasText(spec), "规格异常");
+            AssertUtil.isTrue(specification.getGoodsSpecs().size() > 0, "规格值异常");
         }
 
-        GoodsProduct[] products = goodsAllinone.getProducts();
-        for (GoodsProduct product : products) {
-            Integer number = product.getNumber();
+        List<GoodsProductVo> productDtos = goodsAllinone.getProducts();
+        for (GoodsProductVo productDto : productDtos) {
+            Integer number = productDto.getNumber();
             AssertUtil.isNotTrue(number == null || number < 0, "商品数量异常");
 
-            BigDecimal price = product.getPrice();
+            BigDecimal price = productDto.getPrice();
             AssertUtil.notNull(price, "商品价格异常");
-
-            AssertUtil.isTrue(StringUtils.hasText(product.getSpecifications()), "商品规格值未添加");
         }
     }
+
 }

@@ -82,29 +82,28 @@
         </javaClientGenerator>
 
 
-        <table schema="" tableName="mall_goods_attr" domainObjectName="GoodsAttr"
+        <table schema="" tableName="mall_cart" domainObjectName="Cart"
                enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                enableUpdateByExample="false" selectByExampleQueryId="false"></table>
-        <table schema="" tableName="mall_goods_attr_value" domainObjectName="GoodsAttrValue"
+        <table schema="" tableName="mall_goods" domainObjectName="Goods"
                enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                enableUpdateByExample="false" selectByExampleQueryId="false"></table>
-        <table schema="" tableName="mall_goods_category_attr_relation" domainObjectName="GoodsCategoryAttrRelation"
-               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-               enableUpdateByExample="false" selectByExampleQueryId="false"></table>
-
         <table schema="" tableName="mall_goods_group" domainObjectName="GoodsGroup"
                enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                enableUpdateByExample="false" selectByExampleQueryId="false"></table>
-        <table schema="" tableName="mall_goods_group_attr_relation" domainObjectName="GoodsGroupAttrRelation"
-               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-               enableUpdateByExample="false" selectByExampleQueryId="false"></table>
-        <table schema="" tableName="mall_goods_product_spec_relation" domainObjectName="GoodsProductSpecRelation"
+        <table schema="" tableName="mall_goods_product" domainObjectName="GoodsProduct"
                enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                enableUpdateByExample="false" selectByExampleQueryId="false"></table>
         <table schema="" tableName="mall_goods_spec" domainObjectName="GoodsSpec"
                enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                enableUpdateByExample="false" selectByExampleQueryId="false"></table>
+        <table schema="" tableName="mall_goods_group_attr_relation" domainObjectName="GoodsGroupAttrRelation"
+               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false" selectByExampleQueryId="false"></table>
         <table schema="" tableName="mall_goods_value" domainObjectName="GoodsValue"
+               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false" selectByExampleQueryId="false"></table>
+        <table schema="" tableName="mall_goods_sale_attr" domainObjectName="GoodsSaleAttr"
                enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                enableUpdateByExample="false" selectByExampleQueryId="false"></table>
     </context>

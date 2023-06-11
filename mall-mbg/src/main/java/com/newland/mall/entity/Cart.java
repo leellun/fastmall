@@ -24,21 +24,13 @@ public class Cart extends BaseEntity implements Serializable {
      * 用户表的用户ID
      */
     @Schema(name ="用户表的用户ID")
-    @JsonSerialize(using= ToStringSerializer.class)
     private Long userId;
 
     /**
      * 商品表的商品ID
      */
     @Schema(name ="商品表的商品ID")
-    @JsonSerialize(using= ToStringSerializer.class)
     private Long goodsId;
-
-    /**
-     * 商品编号
-     */
-    @Schema(name ="商品编号")
-    private String goodsSn;
 
     /**
      * 商品名称
@@ -50,8 +42,19 @@ public class Cart extends BaseEntity implements Serializable {
      * 商品货品表的货品ID
      */
     @Schema(name ="商品货品表的货品ID")
-    @JsonSerialize(using= ToStringSerializer.class)
     private Long productId;
+
+    /**
+     * 商品编号
+     */
+    @Schema(name ="商品编号")
+    private String productSn;
+
+    /**
+     * 1:有效 2：商品已下架 3：sku产品无效
+     */
+    @Schema(name ="1:有效 2：商品已下架 3：sku产品无效")
+    private Integer status;
 
     /**
      * 商品货品的价格
@@ -66,14 +69,7 @@ public class Cart extends BaseEntity implements Serializable {
     private Integer number;
 
     /**
-     * 商品规格值列表，采用JSON数组格式
-     */
-    @Schema(name ="商品规格值列表，采用JSON数组格式")
-    private String specifications;
-
-    /**
      * 购物车中商品是否选择状态
-     * @see com.newland.mall.enumeration.BasicEnum
      */
     @Schema(name ="购物车中商品是否选择状态")
     private Integer checked;

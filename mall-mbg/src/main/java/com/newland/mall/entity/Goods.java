@@ -21,12 +21,6 @@ import java.util.List;
 public class Goods  extends BaseEntity implements Serializable {
 
     /**
-     * 商品编号
-     */
-    @Schema(name ="商品编号")
-    private String goodsSn;
-
-    /**
      * 商品名称
      */
     @Schema(name ="商品名称")
@@ -43,7 +37,7 @@ public class Goods  extends BaseEntity implements Serializable {
      */
     @Schema(name ="商品所属类目ID")
     @JsonSerialize(using= ToStringSerializer.class)
-    private Long attributeCategoryId;
+    private Long goodsGroupId;
 
     /**
      */
@@ -129,8 +123,6 @@ public class Goods  extends BaseEntity implements Serializable {
      */
     @Schema(name ="商品详细介绍，是富文本格式")
     private String detail;
-
-    private List<String> galleryList;
 
     private static final long serialVersionUID = 1L;
 }

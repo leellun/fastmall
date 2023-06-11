@@ -28,10 +28,10 @@ public class GoodsProduct  extends BaseEntity implements Serializable {
     private Long goodsId;
 
     /**
-     * 商品规格值列表，采用JSON数组格式
+     * 商品编号
      */
-    @Schema(name ="商品规格值列表，采用JSON数组格式")
-    private String specifications;
+    @Schema(name ="商品编号")
+    private String productSn;
 
     /**
      * 商品货品价格

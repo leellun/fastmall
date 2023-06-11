@@ -1,9 +1,8 @@
 package com.newland.mall.model.vo;
 
-import com.newland.mall.entity.Goods;
-import com.newland.mall.entity.GoodsAttrValue;
-import com.newland.mall.entity.GoodsProduct;
-import com.newland.mall.entity.GoodsSpec;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.newland.mall.entity.*;
+import com.newland.mall.jackson.LongListSerializer;
 import lombok.Data;
 
 import java.util.List;
@@ -16,8 +15,9 @@ import java.util.List;
 @Data
 public class GoodsAllinoneVO {
     Goods goods;
-    List<GoodsSpec> specifications;
+    List<GoodsSaleAttrVo> goodsSaleAttrVos;
     List<GoodsAttrValue> attributes;
-    List<GoodsProduct> products;
+    List<GoodsProductVo> products;
+    @JsonSerialize(using = LongListSerializer.class)
     List<Long> categoryIds;
 }

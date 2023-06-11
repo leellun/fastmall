@@ -2,6 +2,7 @@ package com.newland.mall.mapper;
 
 import com.newland.mall.entity.GoodsAttr;
 import com.newland.mall.model.vo.GoodsAttrInfoVo;
+import com.newland.mall.model.vo.GoodsAttrWithValueVo;
 import com.newland.mybatis.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -43,9 +44,18 @@ public interface GoodsAttrMapper extends BaseMapper<GoodsAttr> {
     /**
      * 商品属性
      *
-     * @param cid  商品分类
+     * @param gid  商品分类
      * @param type 类型
      * @return 属性列表
      */
-    List<GoodsAttr> listByCidAndType(@Param("cid") Long cid, @Param("type") Integer type);
+    List<GoodsAttr> listByGidAndType(@Param("gid") Long gid, @Param("type") Integer type);
+
+    /**
+     * 非绑定属性
+     * @param gid  商品分类
+     * @param type 类型
+     * @return 属性列表
+     */
+    List<GoodsAttr> listUnBindByGidAndType(@Param("gid") Long gid, @Param("type") Integer type);
+
 }

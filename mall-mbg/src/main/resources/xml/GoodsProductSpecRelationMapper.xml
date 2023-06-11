@@ -140,4 +140,8 @@
     update mall_goods_product_spec_relation
     set deleted = 1 where id = #{id,jdbcType=BIGINT}
   </update>
+  <update id="deleteByProductIds">
+    update mall_goods_product_spec_relation
+    set deleted = 1 where product_id in <foreach collection="productIds" item="id" open="(" separator="," close=")">#{id}</foreach>
+  </update>
 </mapper>

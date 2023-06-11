@@ -2,34 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.newland.mall.mapper.GoodsMapper">
     <resultMap id="BaseResultMap" type="com.newland.mall.entity.Goods">
-        <id column="id" jdbcType="BIGINT" property="id"/>
-        <result column="goods_sn" jdbcType="VARCHAR" property="goodsSn"/>
-        <result column="name" jdbcType="VARCHAR" property="name"/>
-        <result column="category_id" jdbcType="BIGINT" property="categoryId"/>
-        <result column="attribute_category_id" jdbcType="BIGINT" property="attributeCategoryId"/>
-        <result column="brand_id" jdbcType="BIGINT" property="brandId"/>
-        <result column="gallery" jdbcType="VARCHAR" property="gallery"/>
-        <result column="keywords" jdbcType="VARCHAR" property="keywords"/>
-        <result column="brief" jdbcType="VARCHAR" property="brief"/>
-        <result column="is_on_sale" jdbcType="BIT" property="isOnSale"/>
-        <result column="sort_order" jdbcType="SMALLINT" property="sortOrder"/>
-        <result column="pic_url" jdbcType="VARCHAR" property="picUrl"/>
-        <result column="share_url" jdbcType="VARCHAR" property="shareUrl"/>
-        <result column="is_new" jdbcType="BIT" property="isNew"/>
-        <result column="is_hot" jdbcType="BIT" property="isHot"/>
-        <result column="unit" jdbcType="VARCHAR" property="unit"/>
-        <result column="counter_price" jdbcType="DECIMAL" property="counterPrice"/>
-        <result column="retail_price" jdbcType="DECIMAL" property="retailPrice"/>
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
-        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-        <result column="deleted" jdbcType="BIT" property="deleted"/>
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="category_id" jdbcType="BIGINT" property="categoryId" />
+        <result column="goods_group_id" jdbcType="BIGINT" property="goodsGroupId" />
+        <result column="brand_id" jdbcType="BIGINT" property="brandId" />
+        <result column="gallery" jdbcType="VARCHAR" property="gallery" />
+        <result column="keywords" jdbcType="VARCHAR" property="keywords" />
+        <result column="brief" jdbcType="VARCHAR" property="brief" />
+        <result column="is_on_sale" jdbcType="BIT" property="isOnSale" />
+        <result column="sort_order" jdbcType="SMALLINT" property="sortOrder" />
+        <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+        <result column="share_url" jdbcType="VARCHAR" property="shareUrl" />
+        <result column="is_new" jdbcType="BIT" property="isNew" />
+        <result column="is_hot" jdbcType="BIT" property="isHot" />
+        <result column="unit" jdbcType="VARCHAR" property="unit" />
+        <result column="counter_price" jdbcType="DECIMAL" property="counterPrice" />
+        <result column="retail_price" jdbcType="DECIMAL" property="retailPrice" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="deleted" jdbcType="BIT" property="deleted" />
     </resultMap>
     <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.newland.mall.entity.Goods">
-        <result column="detail" jdbcType="LONGVARCHAR" property="detail"/>
+        <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
     </resultMap>
     <sql id="Base_Column_List">
-        id
-        , goods_sn, name, category_id,attribute_category_id, brand_id, gallery, keywords, brief, is_on_sale,
+        id, name, category_id, goods_group_id, brand_id, gallery, keywords, brief, is_on_sale,
         sort_order, pic_url, share_url, is_new, is_hot, unit, counter_price, retail_price,
         create_time, update_time, deleted
     </sql>
@@ -38,38 +36,31 @@
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List" />
         ,
-        <include refid="Blob_Column_List"/>
-        from mall_goods
-        where id = #{id,jdbcType=BIGINT} and deleted = 0
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        delete
+        <include refid="Blob_Column_List" />
         from mall_goods
         where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from mall_goods
+        where id = #{id,jdbcType=BIGINT}
     </delete>
-    <update id="deleteLogicalByPrimaryKey">
-        update mall_goods
-        set deleted = 1
-        where id = #{id}
-    </update>
     <insert id="insert" parameterType="com.newland.mall.entity.Goods">
-        insert into mall_goods (id, goods_sn, name,
-                                category_id,attribute_category_id, brand_id, gallery,
-                                keywords, brief, is_on_sale,
-                                sort_order, pic_url, share_url,
-                                is_new, is_hot, unit, counter_price,
-                                retail_price, create_time, update_time,
-                                deleted, detail)
-        values (#{id,jdbcType=BIGINT}, #{goodsSn,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
-                #{categoryId,jdbcType=BIGINT},#{attributeCategoryId}, #{brandId,jdbcType=INTEGER}, #{gallery,jdbcType=VARCHAR},
-                #{keywords,jdbcType=VARCHAR}, #{brief,jdbcType=VARCHAR}, #{isOnSale,jdbcType=BIT},
-                #{sortOrder,jdbcType=SMALLINT}, #{picUrl,jdbcType=VARCHAR}, #{shareUrl,jdbcType=VARCHAR},
-                #{isNew,jdbcType=BIT}, #{isHot,jdbcType=BIT}, #{unit,jdbcType=VARCHAR},
-                #{counterPrice,jdbcType=DECIMAL},
-                #{retailPrice,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
-                #{deleted,jdbcType=BIT}, #{detail,jdbcType=LONGVARCHAR})
+        insert into mall_goods (id, name, category_id,
+        goods_group_id, brand_id, gallery,
+        keywords, brief, is_on_sale,
+        sort_order, pic_url, share_url,
+        is_new, is_hot, unit, counter_price,
+        retail_price, create_time, update_time,
+        deleted, detail)
+        values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{categoryId,jdbcType=BIGINT},
+        #{goodsGroupId,jdbcType=BIGINT}, #{brandId,jdbcType=BIGINT}, #{gallery,jdbcType=VARCHAR},
+        #{keywords,jdbcType=VARCHAR}, #{brief,jdbcType=VARCHAR}, #{isOnSale,jdbcType=BIT},
+        #{sortOrder,jdbcType=SMALLINT}, #{picUrl,jdbcType=VARCHAR}, #{shareUrl,jdbcType=VARCHAR},
+        #{isNew,jdbcType=BIT}, #{isHot,jdbcType=BIT}, #{unit,jdbcType=VARCHAR}, #{counterPrice,jdbcType=DECIMAL},
+        #{retailPrice,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+        #{deleted,jdbcType=BIT}, #{detail,jdbcType=LONGVARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.newland.mall.entity.Goods">
         insert into mall_goods
@@ -77,17 +68,14 @@
             <if test="id != null">
                 id,
             </if>
-            <if test="goodsSn != null">
-                goods_sn,
-            </if>
             <if test="name != null">
                 name,
             </if>
             <if test="categoryId != null">
                 category_id,
             </if>
-            <if test="attributeCategoryId != null">
-                attribute_category_id,
+            <if test="goodsGroupId != null">
+                goods_group_id,
             </if>
             <if test="brandId != null">
                 brand_id,
@@ -145,20 +133,17 @@
             <if test="id != null">
                 #{id,jdbcType=BIGINT},
             </if>
-            <if test="goodsSn != null">
-                #{goodsSn,jdbcType=VARCHAR},
-            </if>
             <if test="name != null">
                 #{name,jdbcType=VARCHAR},
             </if>
             <if test="categoryId != null">
                 #{categoryId,jdbcType=BIGINT},
             </if>
-            <if test="attributeCategoryId != null">
-                #{attributeCategoryId,jdbcType=BIGINT},
+            <if test="goodsGroupId != null">
+                #{goodsGroupId,jdbcType=BIGINT},
             </if>
             <if test="brandId != null">
-                #{brandId,jdbcType=INTEGER},
+                #{brandId,jdbcType=BIGINT},
             </if>
             <if test="gallery != null">
                 #{gallery,jdbcType=VARCHAR},
@@ -213,20 +198,17 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.newland.mall.entity.Goods">
         update mall_goods
         <set>
-            <if test="goodsSn != null">
-                goods_sn = #{goodsSn,jdbcType=VARCHAR},
-            </if>
             <if test="name != null">
                 name = #{name,jdbcType=VARCHAR},
             </if>
             <if test="categoryId != null">
                 category_id = #{categoryId,jdbcType=BIGINT},
             </if>
-            <if test="attributeCategoryId != null">
-                attribute_category_id = #{attributeCategoryId,jdbcType=BIGINT},
+            <if test="goodsGroupId != null">
+                goods_group_id = #{goodsGroupId,jdbcType=BIGINT},
             </if>
             <if test="brandId != null">
-                brand_id = #{brandId,jdbcType=INTEGER},
+                brand_id = #{brandId,jdbcType=BIGINT},
             </if>
             <if test="gallery != null">
                 gallery = #{gallery,jdbcType=VARCHAR},
@@ -281,52 +263,54 @@
     </update>
     <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.newland.mall.entity.Goods">
         update mall_goods
-        set goods_sn      = #{goodsSn,jdbcType=VARCHAR},
-            name          = #{name,jdbcType=VARCHAR},
-            category_id   = #{categoryId,jdbcType=BIGINT},
-            attribute_category_id   = #{attributeCategoryId,jdbcType=BIGINT},
-            brand_id      = #{brandId,jdbcType=INTEGER},
-            gallery       = #{gallery,jdbcType=VARCHAR},
-            keywords      = #{keywords,jdbcType=VARCHAR},
-            brief         = #{brief,jdbcType=VARCHAR},
-            is_on_sale    = #{isOnSale,jdbcType=BIT},
-            sort_order    = #{sortOrder,jdbcType=SMALLINT},
-            pic_url       = #{picUrl,jdbcType=VARCHAR},
-            share_url     = #{shareUrl,jdbcType=VARCHAR},
-            is_new        = #{isNew,jdbcType=BIT},
-            is_hot        = #{isHot,jdbcType=BIT},
-            unit          = #{unit,jdbcType=VARCHAR},
-            counter_price = #{counterPrice,jdbcType=DECIMAL},
-            retail_price  = #{retailPrice,jdbcType=DECIMAL},
-            create_time   = #{createTime,jdbcType=TIMESTAMP},
-            update_time   = #{updateTime,jdbcType=TIMESTAMP},
-            deleted       = #{deleted,jdbcType=BIT},
-            detail        = #{detail,jdbcType=LONGVARCHAR}
+        set name = #{name,jdbcType=VARCHAR},
+        category_id = #{categoryId,jdbcType=BIGINT},
+        goods_group_id = #{goodsGroupId,jdbcType=BIGINT},
+        brand_id = #{brandId,jdbcType=BIGINT},
+        gallery = #{gallery,jdbcType=VARCHAR},
+        keywords = #{keywords,jdbcType=VARCHAR},
+        brief = #{brief,jdbcType=VARCHAR},
+        is_on_sale = #{isOnSale,jdbcType=BIT},
+        sort_order = #{sortOrder,jdbcType=SMALLINT},
+        pic_url = #{picUrl,jdbcType=VARCHAR},
+        share_url = #{shareUrl,jdbcType=VARCHAR},
+        is_new = #{isNew,jdbcType=BIT},
+        is_hot = #{isHot,jdbcType=BIT},
+        unit = #{unit,jdbcType=VARCHAR},
+        counter_price = #{counterPrice,jdbcType=DECIMAL},
+        retail_price = #{retailPrice,jdbcType=DECIMAL},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        deleted = #{deleted,jdbcType=BIT},
+        detail = #{detail,jdbcType=LONGVARCHAR}
         where id = #{id,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.newland.mall.entity.Goods">
         update mall_goods
-        set goods_sn      = #{goodsSn,jdbcType=VARCHAR},
-            name          = #{name,jdbcType=VARCHAR},
-            category_id   = #{categoryId,jdbcType=BIGINT},
-        attribute_category_id   = #{attributeCategoryId,jdbcType=BIGINT},
-            brand_id      = #{brandId,jdbcType=INTEGER},
-            gallery       = #{gallery,jdbcType=VARCHAR},
-            keywords      = #{keywords,jdbcType=VARCHAR},
-            brief         = #{brief,jdbcType=VARCHAR},
-            is_on_sale    = #{isOnSale,jdbcType=BIT},
-            sort_order    = #{sortOrder,jdbcType=SMALLINT},
-            pic_url       = #{picUrl,jdbcType=VARCHAR},
-            share_url     = #{shareUrl,jdbcType=VARCHAR},
-            is_new        = #{isNew,jdbcType=BIT},
-            is_hot        = #{isHot,jdbcType=BIT},
-            unit          = #{unit,jdbcType=VARCHAR},
-            counter_price = #{counterPrice,jdbcType=DECIMAL},
-            retail_price  = #{retailPrice,jdbcType=DECIMAL},
-            create_time   = #{createTime,jdbcType=TIMESTAMP},
-            update_time   = #{updateTime,jdbcType=TIMESTAMP},
-            deleted       = #{deleted,jdbcType=BIT}
+        set name = #{name,jdbcType=VARCHAR},
+        category_id = #{categoryId,jdbcType=BIGINT},
+        goods_group_id = #{goodsGroupId,jdbcType=BIGINT},
+        brand_id = #{brandId,jdbcType=BIGINT},
+        gallery = #{gallery,jdbcType=VARCHAR},
+        keywords = #{keywords,jdbcType=VARCHAR},
+        brief = #{brief,jdbcType=VARCHAR},
+        is_on_sale = #{isOnSale,jdbcType=BIT},
+        sort_order = #{sortOrder,jdbcType=SMALLINT},
+        pic_url = #{picUrl,jdbcType=VARCHAR},
+        share_url = #{shareUrl,jdbcType=VARCHAR},
+        is_new = #{isNew,jdbcType=BIT},
+        is_hot = #{isHot,jdbcType=BIT},
+        unit = #{unit,jdbcType=VARCHAR},
+        counter_price = #{counterPrice,jdbcType=DECIMAL},
+        retail_price = #{retailPrice,jdbcType=DECIMAL},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        deleted = #{deleted,jdbcType=BIT}
         where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="deleteLogicalByPrimaryKey" parameterType="java.lang.Long">
+        update mall_goods
+        set deleted = 1 where id = #{id,jdbcType=BIGINT}
     </update>
     <select id="listGoods" resultMap="BaseResultMap">
         select
@@ -335,7 +319,6 @@
         <where>
             deleted = 0
             <if test="goodsId != null">and id = #{goodsId}</if>
-            <if test="goodsSn != null and goodsSn != ''">and goods_sn = #{goodsSn}</if>
             <if test="name!=null and name!=''">and name = "%"#{name}"%"</if>
         </where>
     </select>

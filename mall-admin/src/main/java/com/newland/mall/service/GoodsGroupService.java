@@ -1,6 +1,7 @@
 package com.newland.mall.service;
 
 import com.github.pagehelper.PageInfo;
+import com.newland.mall.entity.GoodsAttr;
 import com.newland.mall.entity.GoodsGroup;
 import com.newland.mall.model.vo.GoodsAttributeCategoryItemVo;
 import com.newland.mall.model.vo.GoodsGroupVo;
@@ -47,7 +48,20 @@ public interface GoodsGroupService extends IService<GoodsGroup> {
 
     /**
      * 所有
-     * @return 属性分类
+     * @return 属性分组
      */
-    List<GoodsGroup> list();
+    List<GoodsGroup> list(Long categoryId);
+
+    /**
+     * 属性分组绑定属性id
+     * @param gid 属性分组id
+     * @param attrIds 属性id列表
+     */
+    void bindAttrs(Long gid, List<Long> attrIds);
+    /**
+     * 属性分组解绑属性id
+     * @param gid 属性分组id
+     * @param attrIds 属性id列表
+     */
+    void unBindAttrs(Long gid, List<Long> attrIds);
 }
