@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 /**
  * 商品货品表 服务实现类
  * @author leellun
- * @since 2023-06-11 15:40:56
+ * @since 2023-06-13 00:00:11
  */
 @Service
 public class GoodsProductServiceImpl extends ServiceImpl<GoodsProductMapper, GoodsProduct> implements GoodsProductService {

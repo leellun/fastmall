@@ -154,4 +154,10 @@
     update mall_goods_spec
     set deleted = 1 where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="listByGoodsId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mall_goods_spec
+    where goods_id = #{goodsId} and deleted =0
+  </select>
 </mapper>

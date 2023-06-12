@@ -7,6 +7,7 @@
     <result column="sale_attr_id" jdbcType="BIGINT" property="saleAttrId" />
     <result column="goods_attr_id" jdbcType="BIGINT" property="goodsAttrId" />
     <result column="goods_value_id" jdbcType="BIGINT" property="goodsValueId" />
+    <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="value" jdbcType="VARCHAR" property="value" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -14,8 +15,8 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, goods_id, sale_attr_id, goods_attr_id, goods_value_id, name, value, create_time, 
-    update_time, deleted
+    id, goods_id, sale_attr_id, goods_attr_id, goods_value_id, pic_url, name, value, 
+    create_time, update_time, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -29,13 +30,13 @@
   </delete>
   <insert id="insert" parameterType="com.newland.mall.entity.GoodsSpec">
     insert into mall_goods_spec (id, goods_id, sale_attr_id, 
-      goods_attr_id, goods_value_id, name, 
-      value, create_time, update_time, 
-      deleted)
+      goods_attr_id, goods_value_id, pic_url, 
+      name, value, create_time, 
+      update_time, deleted)
     values (#{id,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, #{saleAttrId,jdbcType=BIGINT}, 
-      #{goodsAttrId,jdbcType=BIGINT}, #{goodsValueId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
-      #{value,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{deleted,jdbcType=BIT})
+      #{goodsAttrId,jdbcType=BIGINT}, #{goodsValueId,jdbcType=BIGINT}, #{picUrl,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.newland.mall.entity.GoodsSpec">
     insert into mall_goods_spec
@@ -54,6 +55,9 @@
       </if>
       <if test="goodsValueId != null">
         goods_value_id,
+      </if>
+      <if test="picUrl != null">
+        pic_url,
       </if>
       <if test="name != null">
         name,
@@ -87,6 +91,9 @@
       <if test="goodsValueId != null">
         #{goodsValueId,jdbcType=BIGINT},
       </if>
+      <if test="picUrl != null">
+        #{picUrl,jdbcType=VARCHAR},
+      </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
@@ -119,6 +126,9 @@
       <if test="goodsValueId != null">
         goods_value_id = #{goodsValueId,jdbcType=BIGINT},
       </if>
+      <if test="picUrl != null">
+        pic_url = #{picUrl,jdbcType=VARCHAR},
+      </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
@@ -143,6 +153,7 @@
       sale_attr_id = #{saleAttrId,jdbcType=BIGINT},
       goods_attr_id = #{goodsAttrId,jdbcType=BIGINT},
       goods_value_id = #{goodsValueId,jdbcType=BIGINT},
+      pic_url = #{picUrl,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       value = #{value,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},

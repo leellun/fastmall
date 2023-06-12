@@ -9,7 +9,7 @@ import lombok.Data;
  * 商品参数表
  * mall_goods_value
  * @author leell
- * @date 2023-06-11 15:40:56
+ * @date 2023-06-13 00:00:11
  */
 @Data
 @Schema(name ="商品参数表")

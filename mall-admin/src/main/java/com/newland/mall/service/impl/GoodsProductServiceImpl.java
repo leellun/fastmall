@@ -86,7 +86,7 @@ public class GoodsProductServiceImpl extends ServiceImpl<GoodsProductMapper, Goo
     @Override
     public void updateProducts(Goods goods, List<GoodsProductVo> products, List<GoodsSaleAttrVo> specMap) {
         Long goodsId = goods.getId();
-        List<Long> productIdsDb = baseMapper.listByGoodsId(goodsId).stream().map(GoodsProduct::getId).toList();
+        List<Long> productIdsDb = baseMapper.listByGoodsId(goodsId).stream().map(GoodsProduct::getId).collect(Collectors.toList());
         List<Long> produdtIdList = new ArrayList<>();
 
         // 商品货品表_product
@@ -124,6 +124,8 @@ public class GoodsProductServiceImpl extends ServiceImpl<GoodsProductMapper, Goo
             relation.setItemSort(i);
             relation.setSpecId(goodsSpec.getId());
             relation.setProductId(product.getId());
+            relation.setGoodsAttrId(goodsSpec.getGoodsAttrId());
+            relation.setGoodsValueId(goodsSpec.getGoodsValueId());
         }
         goodsProductSpecRelationService.saveBatch(goodsSpecRelations);
     }

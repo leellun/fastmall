@@ -162,10 +162,10 @@
     from mall_goods_product
     where goods_id = #{goodsId} and deleted =0
   </select>
-  <select id="listWithSpecByGoodsId" resultMap="BaseResultMap">
+  <select id="listWithSpecByGoodsId" resultMap="ResultWithSpecMap">
     select
     t1.id, t1.goods_id, t1.product_sn, t1.price, t1.number, t1.url,
-    t2.id as spec_, t2.spec_id as spec_spec_id, t2.product_id as spec_product_id, t2.item_sort as spec_item_sort, t2.name as spec_name, t2.value as spec_value
+    t2.id as spec_id, t2.spec_id as spec_spec_id, t2.product_id as spec_product_id, t2.item_sort as spec_item_sort, t2.name as spec_name, t2.value as spec_value
     from mall_goods_product t1 left join mall_goods_product_spec_relation t2 on t1.id=t2.product_id
     where t1.goods_id = #{goodsId} and t1.deleted = 0
   </select>

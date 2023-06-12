@@ -9,7 +9,7 @@ import lombok.Data;
  * 产品属性分类表
  * mall_goods_group
  * @author leell
- * @date 2023-06-11 15:40:56
+ * @date 2023-06-13 00:00:11
  */
 @Data
 @Schema(name ="产品属性分类表")

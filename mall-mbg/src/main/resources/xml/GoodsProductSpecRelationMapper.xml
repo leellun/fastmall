@@ -5,18 +5,21 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="spec_id" jdbcType="BIGINT" property="specId" />
     <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
     <result column="item_sort" jdbcType="INTEGER" property="itemSort" />
+    <result column="goods_attr_id" jdbcType="BIGINT" property="goodsAttrId" />
+    <result column="goods_value_id" jdbcType="BIGINT" property="goodsValueId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="value" jdbcType="VARCHAR" property="value" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, spec_id, product_id, item_sort, create_time, update_time, deleted, name, value
+    id, spec_id, product_id, name, value, item_sort, goods_attr_id, goods_value_id, create_time,
+    update_time, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from mall_goods_product_spec_relation
     where id = #{id,jdbcType=BIGINT}
@@ -26,12 +29,14 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.newland.mall.entity.GoodsProductSpecRelation">
-    insert into mall_goods_product_spec_relation (id, spec_id, product_id, 
-      item_sort, create_time, update_time, 
-      deleted, name, value)
-    values (#{id,jdbcType=BIGINT}, #{specId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, 
-      #{itemSort,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{deleted,jdbcType=BIT}, #{name,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR})
+    insert into mall_goods_product_spec_relation (id, spec_id, product_id,
+    name, value, item_sort,
+    goods_attr_id, goods_value_id, create_time,
+    update_time, deleted)
+    values (#{id,jdbcType=BIGINT}, #{specId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT},
+    #{name,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, #{itemSort,jdbcType=INTEGER},
+    #{goodsAttrId,jdbcType=BIGINT}, #{goodsValueId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP},
+    #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.newland.mall.entity.GoodsProductSpecRelation">
     insert into mall_goods_product_spec_relation
@@ -45,8 +50,20 @@
       <if test="productId != null">
         product_id,
       </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="value != null">
+        value,
+      </if>
       <if test="itemSort != null">
         item_sort,
+      </if>
+      <if test="goodsAttrId != null">
+        goods_attr_id,
+      </if>
+      <if test="goodsValueId != null">
+        goods_value_id,
       </if>
       <if test="createTime != null">
         create_time,
@@ -56,12 +73,6 @@
       </if>
       <if test="deleted != null">
         deleted,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="value != null">
-        value,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -74,8 +85,20 @@
       <if test="productId != null">
         #{productId,jdbcType=BIGINT},
       </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        #{value,jdbcType=VARCHAR},
+      </if>
       <if test="itemSort != null">
         #{itemSort,jdbcType=INTEGER},
+      </if>
+      <if test="goodsAttrId != null">
+        #{goodsAttrId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsValueId != null">
+        #{goodsValueId,jdbcType=BIGINT},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -85,12 +108,6 @@
       </if>
       <if test="deleted != null">
         #{deleted,jdbcType=BIT},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="value != null">
-        #{value,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -103,8 +120,20 @@
       <if test="productId != null">
         product_id = #{productId,jdbcType=BIGINT},
       </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        value = #{value,jdbcType=VARCHAR},
+      </if>
       <if test="itemSort != null">
         item_sort = #{itemSort,jdbcType=INTEGER},
+      </if>
+      <if test="goodsAttrId != null">
+        goods_attr_id = #{goodsAttrId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsValueId != null">
+        goods_value_id = #{goodsValueId,jdbcType=BIGINT},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -115,25 +144,21 @@
       <if test="deleted != null">
         deleted = #{deleted,jdbcType=BIT},
       </if>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="value != null">
-        value = #{value,jdbcType=VARCHAR},
-      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.newland.mall.entity.GoodsProductSpecRelation">
     update mall_goods_product_spec_relation
     set spec_id = #{specId,jdbcType=BIGINT},
-      product_id = #{productId,jdbcType=BIGINT},
-      item_sort = #{itemSort,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      deleted = #{deleted,jdbcType=BIT},
-      name = #{name,jdbcType=VARCHAR},
-      value = #{value,jdbcType=VARCHAR}
+    product_id = #{productId,jdbcType=BIGINT},
+    name = #{name,jdbcType=VARCHAR},
+    value = #{value,jdbcType=VARCHAR},
+    item_sort = #{itemSort,jdbcType=INTEGER},
+    goods_attr_id = #{goodsAttrId,jdbcType=BIGINT},
+    goods_value_id = #{goodsValueId,jdbcType=BIGINT},
+    create_time = #{createTime,jdbcType=TIMESTAMP},
+    update_time = #{updateTime,jdbcType=TIMESTAMP},
+    deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="deleteLogicalByPrimaryKey" parameterType="java.lang.Long">

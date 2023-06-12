@@ -23,21 +23,13 @@ public class GoodsProductSpecRelation extends BaseEntity implements Serializable
      * 规格ID
      */
     @Schema(name ="规格ID")
-    @JsonSerialize(using= ToStringSerializer.class)
     private Long specId;
 
     /**
      * product id
      */
     @Schema(name ="product id")
-    @JsonSerialize(using= ToStringSerializer.class)
     private Long productId;
-
-    /**
-     * 顺序
-     */
-    @Schema(name ="顺序")
-    private Integer itemSort;
 
     /**
      * 商品规格名称
@@ -50,6 +42,24 @@ public class GoodsProductSpecRelation extends BaseEntity implements Serializable
      */
     @Schema(name ="商品规格值")
     private String value;
+
+    /**
+     * 顺序
+     */
+    @Schema(name ="顺序")
+    private Integer itemSort;
+
+    /**
+     * 商品参数id
+     */
+    @Schema(name ="商品参数id")
+    private Long goodsAttrId;
+
+    /**
+     * 值id
+     */
+    @Schema(name ="值id")
+    private Long goodsValueId;
 
     private static final long serialVersionUID = 1L;
 }

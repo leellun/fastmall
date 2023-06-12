@@ -82,7 +82,7 @@ public class AdminDTO {
      * 逻辑删除
      */
     @Schema(name ="逻辑删除")
-    private Boolean deleted;
+    private Integer deleted;
 
     /**
      * 角色列表

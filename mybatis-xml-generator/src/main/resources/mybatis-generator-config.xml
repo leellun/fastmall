@@ -106,5 +106,11 @@
         <table schema="" tableName="mall_goods_sale_attr" domainObjectName="GoodsSaleAttr"
                enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                enableUpdateByExample="false" selectByExampleQueryId="false"></table>
+        <table schema="" tableName="mall_goods_product_spec_relation" domainObjectName="GoodsProductSpecRelation"
+               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false" selectByExampleQueryId="false"></table>
+        <table schema="" tableName="mall_attachment" domainObjectName="Attachment"
+               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false" selectByExampleQueryId="false"></table>
     </context>
 </generatorConfiguration>

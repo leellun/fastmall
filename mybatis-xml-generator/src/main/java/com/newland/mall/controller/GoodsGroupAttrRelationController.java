@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 产品的分类和属性组的关系表，用于设置分类筛选条件（只支持一级分类） 控制器
  * @author leellun
- * @since 2023-06-11 15:40:56
+ * @since 2023-06-13 00:00:11
  */
 @RestController
 @RequestMapping("/goodsGroupAttrRelation")

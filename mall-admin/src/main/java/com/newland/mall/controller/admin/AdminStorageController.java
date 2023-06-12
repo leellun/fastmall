@@ -16,6 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+/**
+ * @author leell
+ */
 @Tag(name = "对象存储")
 @RestController
 @RequestMapping("/admin/storage")

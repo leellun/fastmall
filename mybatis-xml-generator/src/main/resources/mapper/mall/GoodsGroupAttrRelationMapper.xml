@@ -116,6 +116,6 @@
   </update>
   <update id="deleteLogicalByPrimaryKey" parameterType="java.lang.Long">
     update mall_goods_group_attr_relation
-    set deleted = 1 where goods_group_id = #{gid}
+    set deleted = 1 where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -9,7 +9,7 @@ import lombok.Data;
  * 销售属性
  * mall_goods_sale_attr
  * @author leell
- * @date 2023-06-11 15:40:56
+ * @date 2023-06-13 00:00:11
  */
 @Data
 @Schema(name ="销售属性")
@@ -37,6 +37,12 @@ public class GoodsSaleAttr implements Serializable {
      */
     @Schema(name ="商品规格名称")
     private String name;
+
+    /**
+     * 顺序
+     */
+    @Schema(name ="顺序")
+    private Integer itemSort;
 
     /**
      * 商品规格图片

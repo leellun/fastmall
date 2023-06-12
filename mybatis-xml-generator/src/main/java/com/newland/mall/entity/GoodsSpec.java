@@ -9,7 +9,7 @@ import lombok.Data;
  * 商品规格表(销售)
  * mall_goods_spec
  * @author leell
- * @date 2023-06-11 15:40:56
+ * @date 2023-06-13 00:00:11
  */
 @Data
 @Schema(name ="商品规格表(销售)")
@@ -43,6 +43,12 @@ public class GoodsSpec implements Serializable {
      */
     @Schema(name ="值id")
     private Long goodsValueId;
+
+    /**
+     * 商品规格图片
+     */
+    @Schema(name ="商品规格图片")
+    private String picUrl;
 
     /**
      * 商品规格名称
