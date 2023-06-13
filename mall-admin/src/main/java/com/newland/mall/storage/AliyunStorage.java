@@ -1,6 +1,7 @@
 package com.newland.mall.storage;
 
 import com.aliyun.oss.OSSClient;
+import com.aliyun.oss.model.DeleteObjectsRequest;
 import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyun.oss.model.PutObjectRequest;
 import com.aliyun.oss.model.PutObjectResult;

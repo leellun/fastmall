@@ -60,9 +60,9 @@ public class MallStorageService {
         return storageInfo;
     }
 
-    private String generateKey(String originalFilename) {
+    public String generateKey(String originalFilename) {
         int index = originalFilename.lastIndexOf('.');
-        String suffix = originalFilename.substring(index);
+        String suffix = index==-1?"":originalFilename.substring(index);
 
         String key = null;
         Storage storageInfo = null;

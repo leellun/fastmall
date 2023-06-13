@@ -71,7 +71,7 @@
             <if test="id != null">
                 #{id,jdbcType=BIGINT},
             </if>
-            <if test="key != null">
+            <if test="uniqueKey != null">
                 #{uniqueKey,jdbcType=VARCHAR},
             </if>
             <if test="name != null">
@@ -100,7 +100,7 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.newland.mall.entity.Storage">
         update mall_storage
         <set>
-            <if test="key != null">
+            <if test="uniqueKey != null">
                 unique_key = #{uniqueKey,jdbcType=VARCHAR},
             </if>
             <if test="name != null">
