@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 
 /**
  * 提供存储服务类，所有存储服务均由该类对外提供
+ * @author leell
  */
 public class MallStorageService {
     private String active;
