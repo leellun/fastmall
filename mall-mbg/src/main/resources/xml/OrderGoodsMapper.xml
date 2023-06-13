@@ -6,7 +6,7 @@
         <result column="order_id" jdbcType="BIGINT" property="orderId"/>
         <result column="goods_id" jdbcType="BIGINT" property="goodsId"/>
         <result column="goods_name" jdbcType="VARCHAR" property="goodsName"/>
-        <result column="goods_sn" jdbcType="VARCHAR" property="goodsSn"/>
+        <result column="product_sn" jdbcType="VARCHAR" property="productSn"/>
         <result column="product_id" jdbcType="BIGINT" property="productId"/>
         <result column="number" jdbcType="SMALLINT" property="number"/>
         <result column="price" jdbcType="DECIMAL" property="price"/>
@@ -18,7 +18,7 @@
         <result column="deleted" jdbcType="BIT" property="deleted"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, order_id, goods_id, goods_name, goods_sn, product_id, number, price, specifications,
+        id, order_id, goods_id, goods_name, product_sn, product_id, number, price, specifications,
         pic_url, comment, create_time, update_time, deleted
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -36,12 +36,12 @@
     </update>
     <insert id="insert" parameterType="com.newland.mall.entity.OrderGoods">
         insert into mall_order_goods (id, order_id, goods_id,
-        goods_name, goods_sn, product_id,
+        goods_name, product_sn, product_id,
         number, price, specifications,
         pic_url, comment, create_time,
         update_time, deleted)
         values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT},
-        #{goodsName,jdbcType=VARCHAR}, #{goodsSn,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER},
+        #{goodsName,jdbcType=VARCHAR}, #{productSn,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER},
         #{number,jdbcType=SMALLINT}, #{price,jdbcType=DECIMAL}, #{specifications,jdbcType=VARCHAR},
         #{picUrl,jdbcType=VARCHAR}, #{comment,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP},
         #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
@@ -61,8 +61,8 @@
             <if test="goodsName != null">
                 goods_name,
             </if>
-            <if test="goodsSn != null">
-                goods_sn,
+            <if test="productSn != null">
+                product_sn,
             </if>
             <if test="productId != null">
                 product_id,
@@ -105,8 +105,8 @@
             <if test="goodsName != null">
                 #{goodsName,jdbcType=VARCHAR},
             </if>
-            <if test="goodsSn != null">
-                #{goodsSn,jdbcType=VARCHAR},
+            <if test="productSn != null">
+                #{productSn,jdbcType=VARCHAR},
             </if>
             <if test="productId != null">
                 #{productId,jdbcType=INTEGER},
@@ -149,8 +149,8 @@
             <if test="goodsName != null">
                 goods_name = #{goodsName,jdbcType=VARCHAR},
             </if>
-            <if test="goodsSn != null">
-                goods_sn = #{goodsSn,jdbcType=VARCHAR},
+            <if test="productSn != null">
+                product_sn = #{productSn,jdbcType=VARCHAR},
             </if>
             <if test="productId != null">
                 product_id = #{productId,jdbcType=INTEGER},
@@ -187,7 +187,7 @@
         set order_id = #{orderId,jdbcType=BIGINT},
         goods_id = #{goodsId,jdbcType=BIGINT},
         goods_name = #{goodsName,jdbcType=VARCHAR},
-        goods_sn = #{goodsSn,jdbcType=VARCHAR},
+        product_sn = #{productSn,jdbcType=VARCHAR},
         product_id = #{productId,jdbcType=INTEGER},
         number = #{number,jdbcType=SMALLINT},
         price = #{price,jdbcType=DECIMAL},

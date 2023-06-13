@@ -44,7 +44,7 @@ public class OrderGoods  extends BaseEntity implements Serializable {
      * 商品编号
      */
     @Schema(name ="商品编号")
-    private String goodsSn;
+    private String productSn;
 
     /**
      * 商品货品表的货品ID

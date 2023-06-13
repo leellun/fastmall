@@ -49,11 +49,11 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
     private ConfigHelper configHelper;
 
     @Override
-    public void updateProduct(Long productId, String goodsSn, String goodsName, BigDecimal price, String url) {
+    public void updateProduct(Long productId, String productSn, String goodsName, BigDecimal price, String url) {
         Cart cart = new Cart();
         cart.setPrice(price);
         cart.setPicUrl(url);
-        cart.setProductSn(goodsSn);
+        cart.setProductSn(productSn);
         cart.setGoodsName(goodsName);
         cart.setProductId(productId);
         baseMapper.updateByProductId(cart);

@@ -17,12 +17,12 @@ public interface CartService extends IService<Cart> {
     /**
      * 更新购物车
      * @param productId 商品货品id
-     * @param goodsSn 商品编号
+     * @param productSn 商品编号
      * @param goodsName 商品名称
      * @param price 价格
      * @param url 地址
      */
-    void updateProduct(Long productId, String goodsSn, String goodsName, BigDecimal price, String url);
+    void updateProduct(Long productId, String productSn, String goodsName, BigDecimal price, String url);
 
     /**
      * 获取用户下购物车

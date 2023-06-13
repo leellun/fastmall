@@ -1,6 +1,8 @@
 package com.newland.mall.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.newland.mall.model.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -22,26 +24,30 @@ public class GoodsSpec extends BaseEntity implements Serializable {
      * 商品表的商品ID
      */
     @Schema(name = "商品表的商品ID")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long goodsId;
-
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long saleAttrId;
 
     /**
      * sku id
      */
     @Schema(name = "sku id")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long productId;
 
     /**
      * 商品参数id
      */
     @Schema(name = "商品参数id")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long goodsAttrId;
 
     /**
      * 值id
      */
     @Schema(name = "值id")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long goodsValueId;
 
     /**
@@ -55,6 +61,11 @@ public class GoodsSpec extends BaseEntity implements Serializable {
      */
     @Schema(name = "商品规格值")
     private String value;
+    /**
+     * 规格图片
+     */
+    @Schema(name = "规格图片")
+    private String picUrl;
 
     private static final long serialVersionUID = 1L;
 

@@ -205,7 +205,7 @@
         set goods_name = #{goodsName},
             price      = #{price},
             pic_url    = #{picUrl},
-            goods_sn   = #{goodsSn}
+            product_sn   = #{productSn}
         where product_id = #{productId}
     </update>
     <select id="listByUserId" resultMap="BaseResultMap">

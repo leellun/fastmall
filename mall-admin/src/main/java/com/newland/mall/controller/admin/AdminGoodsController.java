@@ -33,7 +33,7 @@ public class AdminGoodsController {
      */
     @Operation(summary = "查询")
     @GetMapping
-    public RestResponse<PageInfo<Goods>> list(Integer goodsId, String goodsSn, String name,
+    public RestResponse<PageInfo<Goods>> list(Integer goodsId, String name,
                                               @RequestParam(defaultValue = "1") Integer pageNo,
                                               @RequestParam(defaultValue = "10") Integer pageSize,
                                               @Sort @RequestParam(defaultValue = "create_time") String order,
@@ -41,7 +41,7 @@ public class AdminGoodsController {
         PageEntity pageEntity = PageEntity.page(pageNo, pageSize);
         pageEntity.setOrder(order);
         pageEntity.setDesc(desc);
-        PageInfo<Goods> pageInfo = goodsService.list(goodsId, goodsSn, name, pageEntity);
+        PageInfo<Goods> pageInfo = goodsService.list(goodsId, name, pageEntity);
         return RestResponse.ok(pageInfo);
     }
 
@@ -62,6 +62,7 @@ public class AdminGoodsController {
     public RestResponse<BrandAndCategoryVO> catAndBrands() {
         return RestResponse.ok(goodsService.listCatAndBrands());
     }
+
     /**
      * 添加商品
      *
@@ -74,6 +75,7 @@ public class AdminGoodsController {
         goodsService.create(goodsAllinone);
         return RestResponse.success("操作成功");
     }
+
     /**
      * 编辑商品
      *

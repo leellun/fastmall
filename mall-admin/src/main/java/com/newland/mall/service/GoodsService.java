@@ -24,12 +24,11 @@ public interface GoodsService extends IService<Goods> {
      * 商品列表
      *
      * @param goodsId    商品id
-     * @param goodsSn    商品编号
      * @param name       名称
      * @param pageEntity 分页entity
      * @return
      */
-    PageInfo<Goods> list(Integer goodsId, String goodsSn, String name, PageEntity pageEntity);
+    PageInfo<Goods> list(Integer goodsId, String name, PageEntity pageEntity);
 
     /**
      * 商品详情

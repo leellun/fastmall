@@ -34,12 +34,10 @@ public class GoodsSaleAttr extends BaseEntity implements Serializable {
      */
     @Schema(name ="商品规格名称")
     private String name;
-
     /**
-     * 商品规格图片
+     * 顺序
      */
-    @Schema(name ="商品规格图片")
-    private String picUrl;
-
+    @Schema(name ="顺序")
+    private Integer itemSort;
     private static final long serialVersionUID = 1L;
 }

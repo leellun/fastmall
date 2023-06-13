@@ -62,8 +62,8 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     private GoodsSaleAttrService goodsSaleAttrService;
 
     @Override
-    public PageInfo<Goods> list(Integer goodsId, String goodsSn, String name, PageEntity pageEntity) {
-        return PageWrapper.page(pageEntity, () -> baseMapper.listGoods(goodsId, goodsSn, name));
+    public PageInfo<Goods> list(Integer goodsId, String name, PageEntity pageEntity) {
+        return PageWrapper.page(pageEntity, () -> baseMapper.listGoods(goodsId, name));
     }
 
     @Override

@@ -27,11 +27,10 @@ public interface GoodsMapper extends BaseMapper<Goods> {
      * 商品基本信息列表获取
      *
      * @param goodsId 商品id
-     * @param goodsSn 商品编号
      * @param name
      * @return
      */
-    List<Goods> listGoods(@Param("goodsId") Integer goodsId, @Param("goodsSn") String goodsSn, @Param("name") String name);
+    List<Goods> listGoods(@Param("goodsId") Integer goodsId, @Param("name") String name);
 
     /**
      * 商品列表
