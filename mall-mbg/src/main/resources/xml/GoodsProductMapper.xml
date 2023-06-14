@@ -170,7 +170,7 @@
     where t1.goods_id = #{goodsId} and t1.deleted = 0
   </select>
   <select id="count" resultType="java.lang.Long">
-    select count(1) from mall_goods_product and deleted = 0
+    select count(1) from mall_goods_product where deleted = 0
   </select>
   <delete id="deleteByIds" >
     update mall_goods_product

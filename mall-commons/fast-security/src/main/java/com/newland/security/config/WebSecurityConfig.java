@@ -19,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 /**
  * 资源服务配置
+ *
  * @author leell
  */
 @Configuration
@@ -49,6 +50,12 @@ public class WebSecurityConfig {
                 .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint())
                 .and().headers().cacheControl().disable();
         http.csrf().disable();
+
+        // 配置前台登录接口
+        http.formLogin()
+                .and().logout().logoutUrl("/logout").deleteCookies("SESSIONID")
+                .clearAuthentication(true)
+                .invalidateHttpSession(true);
         return http.build();
     }
 

@@ -6,6 +6,7 @@ import com.newland.mall.exception.BusinessException;
 import com.newland.mall.model.LoginUser;
 import com.newland.mall.utils.Base64Utils;
 import com.newland.mall.utils.JwtTokenUtil;
+import com.newland.security.constant.HttpSessionConstant;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import java.io.IOException;
 
 /**
  * 认证过滤器
+ *
  * @author leell
  */
 public class AuthenticationFilter extends OncePerRequestFilter {
@@ -40,6 +42,17 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             authenticationToken.setDetails(user);
             //将authenticationToken填充到安全上下文
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        } else {
+            LoginUser user = (LoginUser) request.getSession().getAttribute(HttpSessionConstant.LOGIN_SESSION);
+            if (user != null) {
+                //身份信息、权限信息填充到用户身份token对象中
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user, null,
+                        user.getAuthorities() == null ? AuthorityUtils.NO_AUTHORITIES : AuthorityUtils.createAuthorityList(user.getAuthorities().toArray(new String[]{})));
+                //创建details
+                authenticationToken.setDetails(user);
+                //将authenticationToken填充到安全上下文
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            }
         }
         filterChain.doFilter(request, response);
     }

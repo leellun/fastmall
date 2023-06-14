@@ -3,6 +3,9 @@ package com.newland.security.utils;
 import com.newland.mall.model.LoginUser;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+/**
+ * @author leell
+ */
 public class SecurityUtil {
 
     /**
